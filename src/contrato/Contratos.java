@@ -90,4 +90,10 @@ public class Contratos {
     private long calcularDias(){
         return ChronoUnit.DAYS.between(Inicio_Fecha, Fin_Fecha);
     }
+    
+    //Funcion para calcular periodo de alquiler
+    private int calcularPeriodoAlquiler(){
+        long Dias=calcularDias();
+        return (int)((Dias+30-1)/30);
+    }
 }
