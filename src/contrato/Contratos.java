@@ -6,6 +6,7 @@ package contrato;
 
 import excepciones.FechaNoValidaExcepcion;
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 
 /**
@@ -71,13 +72,22 @@ public class Contratos {
         serviciosAdicionales.add(servicio); 
     }
     
+    //Funcion para validar fechas con excepciones 
     public void validarFechas() throws FechaNoValidaExcepcion{
         if(Inicio_Fecha == null || Fin_Fecha == null){
             throw new FechaNoValidaExcepcion("Debe indicar fecha de inicio y fecha de fin");
         }
         if(Fin_Fecha.isBefore(Inicio_Fecha)){
-            throw new FechaNoValidaExcepcion("la fecha fin no puede sewr anterori a la fecha de inicio");
+            throw new FechaNoValidaExcepcion("La fecha fin no puede ser anterior a la fecha de inicio");
+        }
+        if(Fin_Fecha.isEqual(Inicio_Fecha)){
+            throw new FechaNoValidaExcepcion("El periodo de contrato debe ser al menos un día");
         }
     }
-        
+    
+    //Funcion para calcular dias, se importo ChoroUnit para facilitar esta funcioón 
+    //ChronoUnit es una lista de unidades de tiempo (como días, meses o años)
+    private long calcularDias(){
+        return ChronoUnit.DAYS.between(Inicio_Fecha, Fin_Fecha);
+    }
 }
