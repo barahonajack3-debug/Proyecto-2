@@ -4,6 +4,7 @@
  */
 package contrato;
 
+import excepciones.CambioEstadoIncorrectoException;
 import excepciones.FechaNoValidaExcepcion;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
@@ -14,7 +15,7 @@ import java.util.ArrayList;
  * @author USER
  */
 public class Contratos {
-    //Atributos 
+    //=====Atributos===== 
     private int NumeroContrato;
     private Cliente cliente;
     private Espacio espacio;
@@ -23,8 +24,7 @@ public class Contratos {
     private EstadoContratos estado;
     private ArrayList<ServicioAdicional> servicioAdicional;
 
-    //Metodos get
-
+    //=====Metodos get=====
     public int getNumeroContrato() {
         return NumeroContrato;
     }
@@ -53,10 +53,7 @@ public class Contratos {
         return servicioAdicional;
     }
     
-    //Metodos set 
-
-    
-    //Constructor
+    //=====Constructor=====
     public Contratos(int NumeroContrato, Cliente cliente, Espacio espacio, LocalDate Inicio_Fecha, LocalDate Fin_Fecha) {
         this.NumeroContrato = NumeroContrato;
         this.cliente = cliente;
@@ -67,7 +64,8 @@ public class Contratos {
         this.servicioAdicional = new ArrayList<>();
     }
     
-    //Funciones
+    //=====Funciones======
+    //Funcion para agregar servicios adicionales
     public void agregarServicios(ServiciosAdicionales servicios){
         serviciosAdicionales.add(servicio); 
     }
@@ -95,5 +93,54 @@ public class Contratos {
     private int calcularPeriodoAlquiler(){
         long Dias=calcularDias();
         return (int)((Dias+30-1)/30);
+    }
+    
+    //Funcion para calcular el precio segun espacio y servicios adicionales
+    private double calcularTotal(){
+        //Falta la clase espacio para poder sacar el espacio por tamaño
+        double totalEspacio=espacio.getPrecioMensual()*calcularPeriodoAlquiler(); 
+        double totalServicios=0.0;
+        for (ServicioAdicional servicio : serviciosAdicionales) {
+            totalServicios+=servicio.getPrecio();
+        }
+        return totalEspacio+totalServicios;
+    }
+    
+    //Funcio para calcular el subtotal sin impuestos
+    public double calcularSubTotal(){
+        return calcularTotal()/1.13;
+    }
+    
+    //Funcion para activar estado del contrato
+    public void Activar() throws CambioEstadoIncorrectoException{
+        if(estado != EstadoContratos.PENDIENTE){
+            throw new CambioEstadoIncorrectoException("Solo se puede activar un contraro en estado PENDIENTE."
+                + "Estado actual: "+estado);
+        }
+        this.estado=EstadoContratos.ACTIVO;
+        //Falta la clase espacio para podes marcar como espacio ocupado
+        espacio.marcarOcupado();
+    }
+    
+    //Funcion para finalizar estado del contrato
+    public void Finalizar() throws CambioEstadoIncorrectoException{
+        if(estado != EstadoContratos.ACTIVO){
+            throw new CambioEstadoIncorrectoException("Solo se puede finalizar un contraro en estado ACTIVO."
+                + "Estado actual: "+estado);
+        }
+        this.estado=EstadoContratos.FINALIZADO;
+        //Falta la clase espacio para podes marcar como espacio disponible
+        espacio.marcarDisponible();
+    }
+    
+    //Funcion para cancelr estado de contrato
+    public void Cancelar() throws CambioEstadoIncorrectoException{
+        if(estado != EstadoContratos.PENDIENTE){
+            throw new CambioEstadoIncorrectoException("Solo se puede cancelar un contraro en estado PENDIENTE."
+                + "Estado actual: "+estado);
+        }
+        this.estado=EstadoContratos.CANCELADO;
+        //Falta la clase espacio para podes marcar como espacio disponible
+        espacio.marcarDisponible();
     }
 }
