@@ -11,7 +11,7 @@ package empleados;
 public class Empleado {
     private String ID;
     private String Nombre;
-    private String Puesto;
+    private Puesto puesto;
     private double Salario;
 
     public String getID() {
@@ -22,28 +22,29 @@ public class Empleado {
         return Nombre;
     }
 
-    public String getPuesto() {
-        return Puesto;
+    public Puesto getPuesto() {
+        return puesto;
     }
 
     public double getSalario() {
         return Salario;
     }
 
-    public void setPuesto(String Puesto) {
-        this.Puesto = Puesto;
+    public void setPuesto(Puesto puesto) {
+        this.puesto = puesto;
+        this.Salario = puesto.getSalario();
     }
 
     public void setSalario(double Salario) {
         this.Salario = Salario;
     }
 
-    public Empleado(String ID, String Nombre, String Puesto, double Salario) {
+    public Empleado(String ID, String Nombre, Puesto puesto) {
         this.ID = ID;
         this.Nombre = Nombre;
-        this.Puesto = Puesto;
+        this.puesto = puesto;
         this.Salario = Salario;
     }
     
-   
+ 
 }
