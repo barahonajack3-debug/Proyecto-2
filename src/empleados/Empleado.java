@@ -43,7 +43,7 @@ public class Empleado {
         this.ID = ID;
         this.Nombre = Nombre;
         this.puesto = puesto;
-        this.Salario = Salario;
+        this.Salario = puesto.getSalario();
     }
     
  
