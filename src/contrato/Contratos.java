@@ -66,8 +66,8 @@ public class Contratos {
     
     //=====Funciones======
     //Funcion para agregar servicios adicionales
-    public void agregarServicios(ServiciosAdicionales servicios){
-        serviciosAdicionales.add(servicio); 
+    public void agregarServicios(ServicioAdicional servicio){
+        servicioAdicional.add(servicio);
     }
     
     //Funcion para validar fechas con excepciones 
@@ -100,7 +100,7 @@ public class Contratos {
         //Falta la clase espacio para poder sacar el espacio por tamaño
         double totalEspacio=espacio.getPrecioMensual()*calcularPeriodoAlquiler(); 
         double totalServicios=0.0;
-        for (ServicioAdicional servicio : serviciosAdicionales) {
+        for (ServicioAdicional servicio : servicioAdicional) {
             totalServicios+=servicio.getPrecio();
         }
         return totalEspacio+totalServicios;
@@ -109,6 +109,10 @@ public class Contratos {
     //Funcio para calcular el subtotal sin impuestos
     public double calcularSubTotal(){
         return calcularTotal()/1.13;
+    }
+     //Funcion para calcular el total de impuestos
+    public double calcularImpuestos(){
+        return calcularTotal() - calcularSubTotal();
     }
     
     //Funcion para activar estado del contrato
