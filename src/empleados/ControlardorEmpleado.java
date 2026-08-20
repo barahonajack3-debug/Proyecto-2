@@ -19,7 +19,7 @@ public class ControlardorEmpleado {
         return empleado;
     }
     
-    public void setEmpleado(){
+    public void setEmpleado(Empleado empleado){
         this.empleado = empleado;
     }
     
