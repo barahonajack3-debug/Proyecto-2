@@ -59,13 +59,16 @@ public class FrmEspacio extends javax.swing.JFrame {
         btnGuardar.addActionListener(this::btnGuardarActionPerformed);
 
         btnActualizar.setText("Actualizar");
+        btnActualizar.addActionListener(this::btnActualizarActionPerformed);
 
         btnEliminar.setText("Eliminar");
         btnEliminar.addActionListener(this::btnEliminarActionPerformed);
 
         btnBuscar.setText("Buscar");
+        btnBuscar.addActionListener(this::btnBuscarActionPerformed);
 
         btnCancelar.setText("Cancelar");
+        btnCancelar.addActionListener(this::btnCancelarActionPerformed);
 
         jLabel12.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel12.setText("Administración de Espacios");
@@ -211,12 +214,87 @@ public class FrmEspacio extends javax.swing.JFrame {
     }//GEN-LAST:event_btnGuardarActionPerformed
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
-        // TODO add your handling code here:
+        try {
+            int numeroEspacio = Integer.parseInt(txtNumeroEspacio.getText().trim());
+            int confirmacion = javax.swing.JOptionPane.showConfirmDialog(this,
+                    "¿Desea eliminar el espacio " + numeroEspacio + "?", "Confirmar eliminación",
+                    javax.swing.JOptionPane.YES_NO_OPTION,
+                    javax.swing.JOptionPane.WARNING_MESSAGE);
+
+            if (confirmacion != javax.swing.JOptionPane.YES_OPTION) {
+                return;
+            }
+
+            controladorEspacio.eliminarEspacio(numeroEspacio);
+            javax.swing.JOptionPane.showMessageDialog(this,
+                    "Espacio eliminado correctamente.", "Éxito",
+                    javax.swing.JOptionPane.INFORMATION_MESSAGE);
+            limpiarFormulario();
+        } catch (NumberFormatException e) {
+            javax.swing.JOptionPane.showMessageDialog(this,
+                    "Ingrese un número de espacio válido para eliminar.", "Error",
+                    javax.swing.JOptionPane.ERROR_MESSAGE);
+        } catch (excepciones.EspacioOcupadoException e) {
+            javax.swing.JOptionPane.showMessageDialog(this, e.getMessage(), "No se puede eliminar",
+                    javax.swing.JOptionPane.ERROR_MESSAGE);
+        } catch (IllegalArgumentException e) {
+            javax.swing.JOptionPane.showMessageDialog(this, e.getMessage(), "Error",
+                    javax.swing.JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void cmbTipoEspacioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbTipoEspacioActionPerformed
         cargarValoresSegunTipo();
     }//GEN-LAST:event_cmbTipoEspacioActionPerformed
+
+    private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
+        try {
+            int numeroEspacio = Integer.parseInt(txtNumeroEspacio.getText().trim());
+            Espacios espacio = controladorEspacio.buscarPorNumero(numeroEspacio);
+
+            if (espacio == null) {
+                javax.swing.JOptionPane.showMessageDialog(this,
+                        "No existe un espacio con el número " + numeroEspacio + ".",
+                        "Sin resultados", javax.swing.JOptionPane.INFORMATION_MESSAGE);
+                return;
+            }
+
+            cmbTipoEspacio.setSelectedItem(espacio.getTipo().name());
+            txtTamano.setText(String.valueOf(espacio.getTamaño()));
+            txtPrecioMensual.setText(String.valueOf(espacio.getPrecioMensual()));
+            chkDisponible.setSelected(espacio.isDisponible());
+        } catch (NumberFormatException e) {
+            javax.swing.JOptionPane.showMessageDialog(this,
+                    "Ingrese un número de espacio válido para buscar.", "Error",
+                    javax.swing.JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_btnBuscarActionPerformed
+
+    private void btnActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarActionPerformed
+        try {
+            int numeroEspacio = Integer.parseInt(txtNumeroEspacio.getText().trim());
+            TipoEspacio tipo = TipoEspacio.valueOf(
+                    (String) cmbTipoEspacio.getSelectedItem());
+            double tamaño = Double.parseDouble(txtTamano.getText().trim());
+            double precioMensual = Double.parseDouble(txtPrecioMensual.getText().trim());
+
+            controladorEspacio.actualizarEspacio(numeroEspacio, tipo, tamaño, precioMensual);
+            javax.swing.JOptionPane.showMessageDialog(this,
+                    "Espacio actualizado correctamente.", "Éxito",
+                    javax.swing.JOptionPane.INFORMATION_MESSAGE);
+        } catch (NumberFormatException e) {
+            javax.swing.JOptionPane.showMessageDialog(this,
+                    "Ingrese valores numéricos válidos para número, tamaño y precio.",
+                    "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+        } catch (IllegalArgumentException e) {
+            javax.swing.JOptionPane.showMessageDialog(this, e.getMessage(), "Error",
+                    javax.swing.JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_btnActualizarActionPerformed
+
+    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
+        limpiarFormulario();
+    }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void cargarValoresSegunTipo() {
         String tipoSeleccionado = (String) cmbTipoEspacio.getSelectedItem();

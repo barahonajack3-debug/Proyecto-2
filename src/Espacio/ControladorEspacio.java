@@ -5,6 +5,7 @@
 package Espacio;
 
 import excepciones.NumeroEspacioDuplicadoException;
+import excepciones.EspacioOcupadoException;
 import java.util.List;
 
 /**
@@ -29,6 +30,15 @@ public class ControladorEspacio {
 
     public Espacios buscarPorNumero(int numeroEspacio) {
         return gestorEspacios.buscarPorNumero(numeroEspacio);
+    }
+
+    public void actualizarEspacio(int numeroEspacio, TipoEspacio tipo,
+            double tamaño, double precioMensual) {
+        gestorEspacios.actualizarEspacio(numeroEspacio, tipo, tamaño, precioMensual);
+    }
+
+    public void eliminarEspacio(int numeroEspacio) throws EspacioOcupadoException {
+        gestorEspacios.eliminarEspacio(numeroEspacio);
     }
 
     public List<Espacios> buscarConFiltros(Integer numeroEspacio, TipoEspacio tipo,
