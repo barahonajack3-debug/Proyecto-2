@@ -34,7 +34,7 @@ public class Contratos {
         return cliente;
     }
 
-    public Espacio getEspacio() {
+    public Espacios getEspacio() {
         return espacio;
     }
 
@@ -55,7 +55,7 @@ public class Contratos {
     }
     
     //=====Constructor=====
-    public Contratos(int NumeroContrato, Cliente cliente, Espacio espacio, LocalDate Inicio_Fecha, LocalDate Fin_Fecha) {
+    public Contratos(int NumeroContrato, Cliente cliente, Espacios espacio, LocalDate Inicio_Fecha, LocalDate Fin_Fecha) {
         this.NumeroContrato = NumeroContrato;
         this.cliente = cliente;
         this.espacio = espacio;

@@ -4,6 +4,7 @@
  */
 package contrato;
 
+import Espacio.Espacios;
 import java.util.ArrayList;
 
 /**
@@ -41,7 +42,7 @@ public class GestorContratos {
     
     //Recorre los espacios del tipo solicitado y devuelve el primero
     //que no tenga conflicto de fechas con ningún contrato existente.
-    private Espacio buscarEspacioSinConflicto(){
+    private Espacios buscarEspacioSinConflicto(){
         
     }
     
