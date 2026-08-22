@@ -46,5 +46,6 @@ public class Empleado {
         this.Salario = puesto.getSalario();
     }
     
+   
  
 }

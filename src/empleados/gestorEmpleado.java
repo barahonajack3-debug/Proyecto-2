@@ -3,15 +3,19 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package empleados;
+
 import excepciones.EmpleadoNoencontradoException;
 import excepciones.IDduplicadaException;
 import java.util.ArrayList;
+
+
 /**
  *
  * @author EMMAXZZ
  */
 public class gestorEmpleado {
     
+
     private ArrayList<Empleado> empleados;
     
     public gestorEmpleado(){
@@ -49,4 +53,5 @@ public class gestorEmpleado {
        empleados.remove(empleado);
     }
     
+
 }
