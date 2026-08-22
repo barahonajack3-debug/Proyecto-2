@@ -5,6 +5,12 @@
 package contrato;
 
 import Espacio.Espacios;
+import Espacio.GestorEspacios;
+import Espacio.TipoEspacio;
+import excepciones.ClienteNoEncontradoException;
+import excepciones.EspacioNoDisponibleException;
+import excepciones.FechaNoValidaExcepcion;
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 /**
@@ -36,8 +42,33 @@ public class GestorContratos {
      * las fechas y agrega los servicios adicionales.
      */
 
-    public Contratos crearContrato(){
-    
+    public Contratos crearContrato(String identificacionCliente,TipoEspacio tipo,LocalDate Inicio_Fecha,LocalDate Fin_Fecha,
+        ArrayList<ServicioAdicional> servicios,GestorCliente gestorcliente,GestorEspacios gestorespacio)
+        throws ClienteNoEncontradoException,FechaNoValidaExcepcion,EspacioNoDisponibleException{
+        //Validar que el cliente exista
+        Cliente.cliente=GestorClientes.BuscarPorIdentificacion(identificcionCliente);
+        if(cliente==null){
+            throw new ClienteNoEncontradoException("No existe ningún cliente registrado con identificación " + identificacionCliente
+                + "Puede registrarlo desde la opción de Clientes");
+        }
+        //Buscar un espacio del tipo pedido que no tenga conflicto de fechas
+        Espacios espacioAsignado= buscarEspacioSinConflicto(tipo,Inicio_Fecha,Fin_Fecha,gestorespacio);
+        if(espacioAsignado==null){
+            throw new EspacioNoDisponibleException("No hay espacio disponible de tipo " + tipo + " para el periodo seleccionado");
+        }
+        //Crear el contrato (el constructor deja el estado en PENDIENTE)
+        Contratos nuevoContrato= Contratos(Numero,cliente,espacioAsignado,Inicio_Fecha,Fin_Fecha);
+        //Validar fechas (fecha final posterior a inicial, no nulas, etc.)
+        nuevoContrato.validarFechas();
+        //Agregar servicios adicionales, si los hay
+        if(servicios!=null){
+            for(ServicioAdicional servicio: servicios){
+                nuevoContrato.agregarServicios(servicios);
+            }
+        }
+        contratos.add(nuevoContrato);
+        Numero++;
+        return nuevoContrato;
     }
     
     //Recorre los espacios del tipo solicitado y devuelve el primero
