@@ -11,12 +11,14 @@ package Espacio;
 public class FrmEspacio extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(FrmEspacio.class.getName());
+    private final ControladorEspacio controladorEspacio;
 
     /**
      * Creates new form FrmEspacio
      */
     public FrmEspacio() {
         initComponents();
+        controladorEspacio = new ControladorEspacio();
         cargarValoresSegunTipo();
     }
 
@@ -179,11 +181,33 @@ public class FrmEspacio extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoActionPerformed
-        // TODO add your handling code here:
+        limpiarFormulario();
     }//GEN-LAST:event_btnNuevoActionPerformed
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
-        // TODO add your handling code here:
+        try {
+            int numeroEspacio = Integer.parseInt(txtNumeroEspacio.getText().trim());
+            TipoEspacio tipo = TipoEspacio.valueOf(
+                    (String) cmbTipoEspacio.getSelectedItem());
+            double tamaño = Double.parseDouble(txtTamano.getText().trim());
+            double precioMensual = Double.parseDouble(txtPrecioMensual.getText().trim());
+
+            controladorEspacio.guardarEspacio(numeroEspacio, tipo, tamaño, precioMensual);
+            javax.swing.JOptionPane.showMessageDialog(this,
+                    "Espacio registrado correctamente.", "Éxito",
+                    javax.swing.JOptionPane.INFORMATION_MESSAGE);
+            limpiarFormulario();
+        } catch (excepciones.NumeroEspacioDuplicadoException e) {
+            javax.swing.JOptionPane.showMessageDialog(this, e.getMessage(), "Error",
+                    javax.swing.JOptionPane.ERROR_MESSAGE);
+        } catch (NumberFormatException e) {
+            javax.swing.JOptionPane.showMessageDialog(this,
+                    "Ingrese valores numéricos válidos para número, tamaño y precio.",
+                    "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+        } catch (IllegalArgumentException e) {
+            javax.swing.JOptionPane.showMessageDialog(this, e.getMessage(), "Error",
+                    javax.swing.JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_btnGuardarActionPerformed
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
@@ -203,6 +227,14 @@ public class FrmEspacio extends javax.swing.JFrame {
         TipoEspacio tipo = TipoEspacio.valueOf(tipoSeleccionado);
         txtTamano.setText(String.valueOf((int) tipo.getTamaño()));
         txtPrecioMensual.setText(String.valueOf((int) tipo.getPrecioMensual()));
+    }
+
+    private void limpiarFormulario() {
+        txtNumeroEspacio.setText("");
+        cmbTipoEspacio.setSelectedIndex(0);
+        cargarValoresSegunTipo();
+        chkDisponible.setSelected(true);
+        txtNumeroEspacio.requestFocusInWindow();
     }
 
     /**
