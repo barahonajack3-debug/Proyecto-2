@@ -12,6 +12,7 @@ import excepciones.EspacioNoDisponibleException;
 import excepciones.FechaNoValidaExcepcion;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -73,19 +74,53 @@ public class GestorContratos {
     
     //Recorre los espacios del tipo solicitado y devuelve el primero
     //que no tenga conflicto de fechas con ningún contrato existente.
-    private Espacios buscarEspacioSinConflicto(){
-        
+    private Espacios buscarEspacioSinConflicto(TipoEspacio tipo,LocalDate Inicio_Fecha,LocalDate Fin_Fecha
+        GestorEspacios gestorespacio){
+        List<Espacios> candidatos=gestorespacio.buscarConFitros(null,tipo,null,null,null);
+        for (Espacios espacio : candidatos) {
+            if (!verificarConflictosFechas(espacio, Inicio_Fecha, Fin_Fecha)) {
+                return espacio;
+            }
+        }
+        return null;
     }
     
     //Funcion para verificar si el espacio dado tiene conflicto de fechas con algún
     //contrato PENDIENTE o ACTIVO ya registrado.
-    public boolean verificarConflictosFechas(){
-        
+    public boolean verificarConflictosFechas(Espacios espacio,LocalDate Inicio_Fecha,LocalDate Fin_Fecha){
+        for(Contratos contrato:contratos){
+            boolean mismoEspacio=contrato.getEspacio().getNumeroEspacio()==espacio.getNumeroEspacio();
+            boolean estadoRevelado=contrato.getEstado()== EstadoContratos.PENDIENTE
+            || contrato.getEstado() == EstadoContratos.ACTIVO;
+            if(mismoEspacio && estadoRevelado){
+                boolean chocan=!Inicio_Fecha.isAfter(contrato.getFin_Fecha()) && !Fin_Fecha.isBefore(contrato.getInicio_Fecha());
+                if(chocan){
+                    return true;
+                }
+            }
+        }return false;
     }
     
     //Funcion para buscar con filtros para FrmBuscarContrato.
     //Cualquier parámetroen null/vacío se ignora.
-    public ArrayList<Contratos> buscarConFiltro(){
-        
+    public ArrayList<Contratos> buscarConFiltro(Integer numeroContrato,String identificacionCliente,
+        Integer numeroEspacio,EstadoContratos estado){
+        ArrayList<Contratos> resultado= new ArrayList<>();
+        for(Contratos contrato:contratos){
+            if(numeroContrato!=null && contrato.getNumeroContrato()!=numeroContrato){
+                continue;
+            }
+            if(identificacionCliente!=null){
+                continue;
+            }
+            if(numeroEspacio!=null && contrato.getEspacio().getNumeroEspacio()!=numeroEspacio){
+                continue;
+            }
+            if(estado!=null && contrato.getEstado()!= estado){
+                continue;
+            }
+            resultado.add(contrato);
+        }
+        return resultado;
     }
 }
