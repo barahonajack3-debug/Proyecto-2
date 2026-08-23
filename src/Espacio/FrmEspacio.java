@@ -17,8 +17,16 @@ public class FrmEspacio extends javax.swing.JFrame {
      * Creates new form FrmEspacio
      */
     public FrmEspacio() {
+        this(new ControladorEspacio());
+    }
+
+    public FrmEspacio(ControladorEspacio controladorEspacio) {
+        if (controladorEspacio == null) {
+            throw new IllegalArgumentException("El controlador de espacios es obligatorio.");
+        }
+        this.controladorEspacio = controladorEspacio;
         initComponents();
-        controladorEspacio = new ControladorEspacio();
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         cargarValoresSegunTipo();
     }
 
@@ -248,26 +256,9 @@ public class FrmEspacio extends javax.swing.JFrame {
     }//GEN-LAST:event_cmbTipoEspacioActionPerformed
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
-        try {
-            int numeroEspacio = Integer.parseInt(txtNumeroEspacio.getText().trim());
-            Espacios espacio = controladorEspacio.buscarPorNumero(numeroEspacio);
-
-            if (espacio == null) {
-                javax.swing.JOptionPane.showMessageDialog(this,
-                        "No existe un espacio con el número " + numeroEspacio + ".",
-                        "Sin resultados", javax.swing.JOptionPane.INFORMATION_MESSAGE);
-                return;
-            }
-
-            cmbTipoEspacio.setSelectedItem(espacio.getTipo().name());
-            txtTamano.setText(String.valueOf(espacio.getTamaño()));
-            txtPrecioMensual.setText(String.valueOf(espacio.getPrecioMensual()));
-            chkDisponible.setSelected(espacio.isDisponible());
-        } catch (NumberFormatException e) {
-            javax.swing.JOptionPane.showMessageDialog(this,
-                    "Ingrese un número de espacio válido para buscar.", "Error",
-                    javax.swing.JOptionPane.ERROR_MESSAGE);
-        }
+        FrmBuscarEspacio ventanaBuscar = new FrmBuscarEspacio(controladorEspacio);
+        ventanaBuscar.setLocationRelativeTo(this);
+        ventanaBuscar.setVisible(true);
     }//GEN-LAST:event_btnBuscarActionPerformed
 
     private void btnActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarActionPerformed
