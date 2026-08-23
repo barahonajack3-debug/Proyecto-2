@@ -9,7 +9,7 @@ package empleados;
  * @author EMMAXZZ
  */
 public enum Puesto {
-     ADMINISTRADOR(950000),
+    ADMINISTRADOR(950000),
     RECEPCIONISTA(700000),
     ENCARGADO_DE_BODEGA(650000),
     MANTENIMIENTO(600000),
