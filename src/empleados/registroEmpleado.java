@@ -4,19 +4,34 @@
  */
 package empleados;
 
+import javax.swing.JOptionPane;
+import excepciones.IDduplicadaException;
+import excepciones.EmpleadoNoencontradoException;
 /**
  *
  * @author EMMAXZZ
  */
 public class registroEmpleado extends javax.swing.JFrame {
-    
+    public gestorEmpleado gestor;
+    public ControlardorEmpleado controlador;
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(registroEmpleado.class.getName());
-
+      
     /**
      * Creates new form registroEmpleado
      */
     public registroEmpleado() {
         initComponents();
+        
+        gestor = new gestorEmpleado();
+        controlador = new ControlardorEmpleado (gestor);
+        
+        cbxpuesto.removeAllItems();
+        
+        for(Puesto puesto : Puesto.values()){
+            cbxpuesto.addItem(puesto.toString());
+        }
+       
+        
     }
 
     /**
@@ -69,6 +84,8 @@ public class registroEmpleado extends javax.swing.JFrame {
         jLabel5.setText("Puesto:");
 
         cbxpuesto.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cbxpuesto.setName(""); // NOI18N
+        cbxpuesto.addActionListener(this::cbxpuestoActionPerformed);
 
         btguardar.setFont(new java.awt.Font("Lucida Console", 0, 12)); // NOI18N
         btguardar.setText("Guardar");
@@ -76,12 +93,15 @@ public class registroEmpleado extends javax.swing.JFrame {
 
         btbuscar.setFont(new java.awt.Font("Lucida Console", 0, 12)); // NOI18N
         btbuscar.setText("Buscar");
+        btbuscar.addActionListener(this::btbuscarActionPerformed);
 
         bteliminar.setFont(new java.awt.Font("Lucida Console", 0, 12)); // NOI18N
         bteliminar.setText("Eliminar");
+        bteliminar.addActionListener(this::bteliminarActionPerformed);
 
         btactualizar.setFont(new java.awt.Font("Lucida Console", 0, 12)); // NOI18N
         btactualizar.setText("Actualizar");
+        btactualizar.addActionListener(this::btactualizarActionPerformed);
 
         jLabel6.setFont(new java.awt.Font("Georgia", 0, 14)); // NOI18N
         jLabel6.setText("Salario:");
@@ -90,6 +110,7 @@ public class registroEmpleado extends javax.swing.JFrame {
 
         jButton1.setFont(new java.awt.Font("Unispace", 0, 12)); // NOI18N
         jButton1.setText("Limpiar campos");
+        jButton1.addActionListener(this::jButton1ActionPerformed);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -188,8 +209,76 @@ public class registroEmpleado extends javax.swing.JFrame {
     }//GEN-LAST:event_txtTELActionPerformed
 
     private void btguardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btguardarActionPerformed
-        // TODO add your handling code here:
+        try{
+            String ID = txtID.getText();
+            String Nombre = txtNOM.getText();
+            String telefono =txtTEL.getText();
+            Puesto puesto = Puesto.valueOf(cbxpuesto.getSelectedItem().toString());
+            JOptionPane.showMessageDialog(this,"Se guardo correctamente el empleado");
+            controlador.agregarEmpleado(ID, Nombre, telefono, puesto);
+            
+        } catch (IDduplicadaException i){
+            JOptionPane.showMessageDialog(this, i.getMessage());
+        }
     }//GEN-LAST:event_btguardarActionPerformed
+
+    private void cbxpuestoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbxpuestoActionPerformed
+      if(cbxpuesto.getSelectedItem()!= null){
+          Puesto puesto = Puesto.valueOf(cbxpuesto.getSelectedItem().toString());
+          txfsalario.setText(String.valueOf(puesto.getSalario()));
+      }
+    }//GEN-LAST:event_cbxpuestoActionPerformed
+
+    private void btactualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btactualizarActionPerformed
+        try{
+            String ID = txtID.getText();
+            String Nombre = txtNOM.getText();
+            String telefono = txtTEL.getText();
+             Puesto puesto = Puesto.valueOf(
+             cbxpuesto.getSelectedItem().toString()
+        );
+             controlador.actualizarempleado(ID, Nombre, telefono, puesto);
+             JOptionPane.showMessageDialog(this, "Se actualizo el empleado correctamente");
+        } catch(EmpleadoNoencontradoException no){
+            JOptionPane.showMessageDialog(this, no.getMessage());
+
+        }
+    }//GEN-LAST:event_btactualizarActionPerformed
+
+    private void bteliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bteliminarActionPerformed
+       try{
+           String ID =  txtID.getText();
+           controlador.eliminarEmpleado(ID);
+           JOptionPane.showMessageDialog(this, "Se elimino correctamente el empleado");
+       } catch (EmpleadoNoencontradoException D){
+           JOptionPane.showMessageDialog(this,D.getMessage());
+       }
+    }//GEN-LAST:event_bteliminarActionPerformed
+
+    private void btbuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btbuscarActionPerformed
+       String ID = txtID.getText();
+      Empleado empleado = controlador.buscarEmpleado(ID);
+    if (empleado != null) {
+        txtNOM.setText(empleado.getNombre());
+        txtTEL.setText(empleado.getTelefono());
+        cbxpuesto.setSelectedItem(
+                empleado.getPuesto().toString()
+        );
+        txfsalario.setText(
+                String.valueOf(empleado.getSalario())
+        );
+    } else {
+        JOptionPane.showMessageDialog(this, "No existe empleado con ese ID");
+    }
+    }//GEN-LAST:event_btbuscarActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        txtID.setText("");
+    txtNOM.setText("");
+    txtTEL.setText("");
+    txfsalario.setText("");
+    
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
