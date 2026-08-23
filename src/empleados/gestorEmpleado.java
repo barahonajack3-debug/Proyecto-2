@@ -53,16 +53,18 @@ public class gestorEmpleado {
        empleados.remove(empleado);
     }
     
-    public void actualizarempleado(String ID)
+    public void actualizarempleado(String ID,String Nombre,String Telefono,Puesto puesto)
         throws EmpleadoNoencontradoException{
         Empleado empleado = buscarEmpleado(ID);
         if(empleado == null){
             throw new EmpleadoNoencontradoException(
             "no existe empleado con ese ID");
         }
-        empleado.setNombre(ID);
-        empleado.setTelefono(ID);
+        empleado.setNombre(Nombre);
+        empleado.setTelefono(Telefono);
+        empleado.setPuesto(puesto);
     } 
+    
         
     }
 
