@@ -3,7 +3,8 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package empleados;
-
+import javax.swing.table.DefaultTableModel;
+import javax.swing.JOptionPane;
 /**
  *
  * @author EMMAXZZ
@@ -11,12 +12,20 @@ package empleados;
 public class FrmbuscarEmpleado extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(FrmbuscarEmpleado.class.getName());
-
+    private ControladorEmpleado controlador;
+    private registroEmpleado frmEmpleado;
     /**
      * Creates new form FrmbuscarEmpleado
      */
-    public FrmbuscarEmpleado() {
+    public FrmbuscarEmpleado(ControladorEmpleado controlador, registroEmpleado frmEmpleado) {
         initComponents();
+        
+        this.controlador = controlador;
+         this.frmEmpleado = frmEmpleado; 
+        llenarpuesto();
+        tablabuscar();
+
+    
     }
 
     /**
@@ -28,21 +37,173 @@ public class FrmbuscarEmpleado extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jLabel1 = new javax.swing.JLabel();
+        txfid = new javax.swing.JTextField();
+        jLabel2 = new javax.swing.JLabel();
+        txfnom = new javax.swing.JTextField();
+        jLabel3 = new javax.swing.JLabel();
+        cbxpues = new javax.swing.JComboBox<>();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tblbusca = new javax.swing.JTable();
+        btbusca = new javax.swing.JButton();
+        btacep = new javax.swing.JButton();
+        btcanc = new javax.swing.JButton();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        jLabel1.setText("ID:");
+
+        jLabel2.setText("Nombre completo:");
+
+        jLabel3.setText("Puesto:");
+
+        cbxpues.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cbxpues.addActionListener(this::cbxpuesActionPerformed);
+
+        tblbusca.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
+            },
+            new String [] {
+                "ID", "Nombre", "Telefono", "Puesto", "Salario"
+            }
+        ));
+        jScrollPane1.setViewportView(tblbusca);
+
+        btbusca.setText("Bucar");
+        btbusca.addActionListener(this::btbuscaActionPerformed);
+
+        btacep.setText("aceptar");
+        btacep.addActionListener(this::btacepActionPerformed);
+
+        btcanc.setText("cancelar");
+        btcanc.addActionListener(this::btcancActionPerformed);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(24, 24, 24)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(cbxpues, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txfid, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(txfnom))
+                    .addComponent(jLabel3))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 32, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 452, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(btbusca)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btacep)
+                        .addGap(109, 109, 109)
+                        .addComponent(btcanc)
+                        .addGap(26, 26, 26))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(40, 40, 40)
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(txfid, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(31, 31, 31)
+                        .addComponent(jLabel2)
+                        .addGap(18, 18, 18)
+                        .addComponent(txfnom, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(28, 28, 28)
+                        .addComponent(jLabel3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(cbxpues, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 332, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btbusca)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(btacep)
+                        .addComponent(btcanc)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+     private void llenarpuesto() {
+    cbxpues.removeAllItems();
+    cbxpues.addItem("Todos");
+    for (Puesto puesto : Puesto.values()) {
+        cbxpues.addItem(puesto.toString());
+    }
+}
+     private void tablabuscar() {
+    DefaultTableModel modelo = (DefaultTableModel) tblbusca.getModel();
+    modelo.setRowCount(0);
+    for (Empleado empleado : controlador.getEmpleados()) {
+        modelo.addRow(new Object[]{
+            empleado.getID(),
+            empleado.getNombre(),
+            empleado.getTelefono(),
+            empleado.getPuesto(),
+            empleado.getSalario()
+        });
+    }
+}
+    private void cbxpuesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbxpuesActionPerformed
+      
+    }//GEN-LAST:event_cbxpuesActionPerformed
+
+    private void btbuscaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btbuscaActionPerformed
+         DefaultTableModel modelo = (DefaultTableModel) tblbusca.getModel();
+          modelo.setRowCount(0);
+          String ID = txfid.getText();
+          String nombre = txfnom.getText();
+          String puestoSele = cbxpues.getSelectedItem().toString();
+          for (Empleado empleado : controlador.getEmpleados()) {
+               boolean bID = ID.isEmpty() || empleado.getID().contains(ID);
+                boolean bNombre = nombre.isEmpty() || empleado.getNombre().contains(nombre);
+                 boolean bPuesto = puestoSele.equals("Todos") || 
+                         empleado.getPuesto().toString().equals(puestoSele);
+                  if (bID && bNombre && bPuesto) {
+
+            modelo.addRow(new Object[]{
+                empleado.getID(),
+                empleado.getNombre(),
+                empleado.getTelefono(),
+                empleado.getPuesto(),
+                empleado.getSalario()
+            });
+          }
+        }
+    }//GEN-LAST:event_btbuscaActionPerformed
+
+    private void btcancActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btcancActionPerformed
+        dispose();
+    }//GEN-LAST:event_btcancActionPerformed
+
+    private void btacepActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btacepActionPerformed
+         int fila = tblbusca.getSelectedRow();
+          if (fila == -1) {
+        JOptionPane.showMessageDialog(this,"Seleccione un empleado"
+        ); 
+          }else{ String ID = tblbusca.getValueAt(fila, 0).toString();
+          Empleado empleado = controlador.buscarEmpleado(ID);
+          frmEmpleado.buscarEmpleado(empleado);
+          dispose();
+    }
+    }//GEN-LAST:event_btacepActionPerformed
 
     /**
      * @param args the command line arguments
@@ -66,9 +227,20 @@ public class FrmbuscarEmpleado extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> new FrmbuscarEmpleado().setVisible(true));
+        
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btacep;
+    private javax.swing.JButton btbusca;
+    private javax.swing.JButton btcanc;
+    private javax.swing.JComboBox<String> cbxpues;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable tblbusca;
+    private javax.swing.JTextField txfid;
+    private javax.swing.JTextField txfnom;
     // End of variables declaration//GEN-END:variables
 }

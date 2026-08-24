@@ -65,6 +65,9 @@ public class gestorEmpleado {
         empleado.setPuesto(puesto);
     } 
     
+     public ArrayList<Empleado> getEmpleados() {
+        return empleados;
+    }
         
     }
 

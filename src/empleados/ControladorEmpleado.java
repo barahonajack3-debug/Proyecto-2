@@ -5,16 +5,17 @@
 package empleados;
 import excepciones.IDduplicadaException;
 import excepciones.EmpleadoNoencontradoException;
+import java.util.ArrayList;
 /**
  *
  * @author EMMAXZZ
  */
-public class ControlardorEmpleado {
+public class ControladorEmpleado {
     private Empleado empleado;
     
     private gestorEmpleado gestor;
    
-  public ControlardorEmpleado(gestorEmpleado gestor) {
+  public ControladorEmpleado(gestorEmpleado gestor) {
       this.gestor = gestor;
   }
   public void agregarEmpleado(String ID,String Nombre,String Telefono, Puesto puesto)
@@ -35,5 +36,8 @@ public class ControlardorEmpleado {
         throws EmpleadoNoencontradoException{
         gestor.eliminarEmpleado(ID);
     }
+    public ArrayList<Empleado> getEmpleados() {
+    return gestor.getEmpleados();
+}
   }
 

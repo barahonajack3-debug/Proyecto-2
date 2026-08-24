@@ -13,7 +13,7 @@ import excepciones.EmpleadoNoencontradoException;
  */
 public class registroEmpleado extends javax.swing.JFrame {
     public gestorEmpleado gestor;
-    public ControlardorEmpleado controlador;
+    public ControladorEmpleado controlador;
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(registroEmpleado.class.getName());
       
     /**
@@ -23,7 +23,7 @@ public class registroEmpleado extends javax.swing.JFrame {
         initComponents();
         
         gestor = new gestorEmpleado();
-        controlador = new ControlardorEmpleado (gestor);
+        controlador = new ControladorEmpleado (gestor);
         
         cbxpuesto.removeAllItems();
         
@@ -32,7 +32,20 @@ public class registroEmpleado extends javax.swing.JFrame {
         }
        
         
+        
     }
+    public void buscarEmpleado(Empleado empleado) {
+    txtID.setText(empleado.getID());
+    txtNOM.setText(empleado.getNombre());
+    txtTEL.setText(empleado.getTelefono());
+
+    cbxpuesto.setSelectedItem(
+            empleado.getPuesto().toString()
+    );
+    txfsalario.setText(
+            String.valueOf(empleado.getSalario())
+    );
+}
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -256,24 +269,12 @@ public class registroEmpleado extends javax.swing.JFrame {
     }//GEN-LAST:event_bteliminarActionPerformed
 
     private void btbuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btbuscarActionPerformed
-       String ID = txtID.getText();
-      Empleado empleado = controlador.buscarEmpleado(ID);
-    if (empleado != null) {
-        txtNOM.setText(empleado.getNombre());
-        txtTEL.setText(empleado.getTelefono());
-        cbxpuesto.setSelectedItem(
-                empleado.getPuesto().toString()
-        );
-        txfsalario.setText(
-                String.valueOf(empleado.getSalario())
-        );
-    } else {
-        JOptionPane.showMessageDialog(this, "No existe empleado con ese ID");
-    }
+      FrmbuscarEmpleado buscar = new FrmbuscarEmpleado(controlador, this);
+      buscar.setVisible(true);
     }//GEN-LAST:event_btbuscarActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        txtID.setText("");
+    txtID.setText("");
     txtNOM.setText("");
     txtTEL.setText("");
     txfsalario.setText("");
