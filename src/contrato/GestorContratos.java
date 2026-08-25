@@ -13,6 +13,7 @@ import excepciones.FechaNoValidaExcepcion;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import serviciosAdicionales.ServicioAdicional;
 
 /**
  *
@@ -47,13 +48,13 @@ public class GestorContratos {
         ArrayList<ServicioAdicional> servicios,GestorCliente gestorcliente,GestorEspacios gestorespacio)
         throws ClienteNoEncontradoException,FechaNoValidaExcepcion,EspacioNoDisponibleException{
         //Validar que el cliente exista
-        Cliente.cliente=GestorClientes.BuscarPorIdentificacion(identificcionCliente);
+        Cliente.cliente=gestorcliente.BuscarPorIdentificacion(identificacionCliente);
         if(cliente==null){
-            throw new ClienteNoEncontradoException("No existe ningún cliente registrado con identificación " + identificacionCliente
-                + "Puede registrarlo desde la opción de Clientes");
+            throw new ClienteNoEncontradoException("No existe ningún cliente registrado con identificación:" + identificacionCliente
+                + " Puede registrarlo desde la opción de Clientes");
         }
         //Buscar un espacio del tipo pedido que no tenga conflicto de fechas
-        Espacios espacioAsignado= buscarEspacioSinConflicto(tipo,Inicio_Fecha,Fin_Fecha,gestorespacio);
+        Espacios espacioAsignado = buscarEspacioSinConflicto(tipo,Inicio_Fecha,Fin_Fecha,gestorespacio);
         if(espacioAsignado==null){
             throw new EspacioNoDisponibleException("No hay espacio disponible de tipo " + tipo + " para el periodo seleccionado");
         }
@@ -74,9 +75,9 @@ public class GestorContratos {
     
     //Recorre los espacios del tipo solicitado y devuelve el primero
     //que no tenga conflicto de fechas con ningún contrato existente.
-    private Espacios buscarEspacioSinConflicto(TipoEspacio tipo,LocalDate Inicio_Fecha,LocalDate Fin_Fecha
+    private Espacios buscarEspacioSinConflicto(TipoEspacio tipo,LocalDate Inicio_Fecha,LocalDate Fin_Fecha,
         GestorEspacios gestorespacio){
-        List<Espacios> candidatos=gestorespacio.buscarConFitros(null,tipo,null,null,null);
+        List<Espacios> candidatos=gestorespacio.buscarConFiltros(null,tipo,null,null,null);
         for (Espacios espacio : candidatos) {
             if (!verificarConflictosFechas(espacio, Inicio_Fecha, Fin_Fecha)) {
                 return espacio;

@@ -4,27 +4,54 @@
  */
 package contrato;
 
+import Espacio.GestorEspacios;
+import Espacio.TipoEspacio;
+import excepciones.CambioEstadoIncorrectoException;
+import excepciones.ClienteNoEncontradoException;
+import excepciones.EspacioNoDisponibleException;
+import excepciones.FechaNoValidaExcepcion;
+import java.time.LocalDate;
 import java.util.ArrayList;
-
+import serviciosAdicionales.ServicioAdicional;
 /**
  *
  * @author USER
  */
 public class ControladorContratos {
-    //======Atributos======
-    private ArrayList<Contratos> contratos=new ArrayList<>();
-    private int Numero;
+    //=====Atributos=====
+    private GestorContratos gestorContratos;
+    private GestorCliente gestorCliente;
+    private GestorEspacios gestorEspacios;
     
-    //======Metodos get======
-    public ArrayList<Contratos> getContratos() {
-        return contratos;
+    //=====Constructor=====
+    public ControladorContratos(GestorContratos gestorContratos, GestorCliente gestorCliente, GestorEspacios gestorEspacios) {
+        this.gestorContratos = gestorContratos;
+        this.gestorCliente = gestorCliente;
+        this.gestorEspacios = gestorEspacios;
     }
     
-    //======Constructor======
-    public ControladorContratos() {
-        this.contratos=new ArrayList<>();
-        this.Numero = Numero;
+     //=====Funciones=====
+    public Contratos crearContrato(String identificacionCliente, TipoEspacio tipo, LocalDate Fecha_Inicio,
+            LocalDate Fecha_Fin, ArrayList<ServicioAdicional> servicios)
+            throws ClienteNoEncontradoException, FechaNoValidaExcepcion, EspacioNoDisponibleException {
+        return gestorContratos.crearContrato(identificacionCliente, tipo, Fecha_Inicio, Fecha_Fin,
+            servicios, gestorCliente, gestorEspacios);
     }
-    
-    
+ 
+    public void activarContrato(Contratos contrato) throws CambioEstadoIncorrectoException {
+        contrato.Activar();
+    }
+ 
+    public void finalizarContrato(Contratos contrato) throws CambioEstadoIncorrectoException {
+        contrato.Finalizar();
+    }
+ 
+    public void cancelarContrato(Contratos contrato) throws CambioEstadoIncorrectoException {
+        contrato.Cancelar();
+    }
+ 
+    public ArrayList<Contratos> buscarContratos(Integer numeroContrato, String identificacionCliente,
+            Integer numeroEspacio, EstadoContratos estado) {
+        return gestorContratos.buscarConFiltro(numeroContrato, identificacionCliente, numeroEspacio, estado);
+    }
 }

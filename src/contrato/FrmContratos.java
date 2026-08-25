@@ -31,7 +31,10 @@ public class FrmContratos extends javax.swing.JFrame {
      */
     public FrmContratos() {
         initComponents();
-        this.controlador = new ControladorContratos(GestorContratos,GestorCliente,GestorEspacios);
+        GestorContratos gestorContratos = new GestorContratos();
+        GestorCliente gestorCliente = new GestorCliente();
+        GestorEspacios gestorEspacios = new GestorEspacios();
+        this.controlador = new ControladorContratos(gestorContratos, gestorCliente, gestorEspacios);
     }
 
     /**
