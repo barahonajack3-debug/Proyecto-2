@@ -96,6 +96,7 @@ public class FrmContratos extends javax.swing.JFrame {
 
         jLabel3.setText("Nombre");
 
+        btnBuscar.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnBuscar.setText("Buscar");
         btnBuscar.addActionListener(this::btnBuscarActionPerformed);
 
@@ -261,24 +262,31 @@ public class FrmContratos extends javax.swing.JFrame {
 
         jLabel20.setText("Total:");
 
+        btnCrearContrato.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnCrearContrato.setText("Crear contrato");
         btnCrearContrato.addActionListener(this::btnCrearContratoActionPerformed);
 
+        btnActivar.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnActivar.setText("Activar");
         btnActivar.addActionListener(this::btnActivarActionPerformed);
 
+        btnFinalizar.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnFinalizar.setText("Finalizar");
         btnFinalizar.addActionListener(this::btnFinalizarActionPerformed);
 
+        btnCancelar.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnCancelar.setText("Cancelar");
         btnCancelar.addActionListener(this::btnCancelarActionPerformed);
 
+        btnBuscarContrato.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnBuscarContrato.setText("Buscar");
         btnBuscarContrato.addActionListener(this::btnBuscarContratoActionPerformed);
 
+        btnLimpiar.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnLimpiar.setText("Limpiar");
         btnLimpiar.addActionListener(this::btnLimpiarActionPerformed);
 
+        btnSalir.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnSalir.setText("Salir");
         btnSalir.addActionListener(this::btnSalirActionPerformed);
 

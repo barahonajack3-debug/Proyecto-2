@@ -65,7 +65,7 @@ public class GestorContratos {
         //Agregar servicios adicionales, si los hay
         if(servicios!=null){
             for(ServicioAdicional servicio: servicios){
-                nuevoContrato.agregarServicios(servicios);
+                nuevoContrato.agregarServicios(servicio);
             }
         }
         contratos.add(nuevoContrato);
