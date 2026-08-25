@@ -4,6 +4,9 @@
  */
 package serviciosAdicionales;
 
+import excepciones.ServicioNoencontradoException;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author EMMAXZZ
@@ -11,12 +14,18 @@ package serviciosAdicionales;
 public class FrmServicio extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(FrmServicio.class.getName());
-
+    private gestorServicio gestor;
+    private ControladorServicio controlador;
     /**
      * Creates new form FrmServicio
      */
     public FrmServicio() {
         initComponents();
+        
+         gestor = new gestorServicio();
+    controlador = new ControladorServicio(gestor);
+
+    
     }
 
     /**
@@ -36,17 +45,15 @@ public class FrmServicio extends javax.swing.JFrame {
         txfDesc = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
         txfPrec = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
+        btGuardar = new javax.swing.JButton();
+        btActualizar = new javax.swing.JButton();
+        bteliminar = new javax.swing.JButton();
+        btBuscar = new javax.swing.JButton();
+        btLimpiar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jLabel1.setText("Codigo:");
-
-        txfcode.setEditable(false);
 
         jLabel2.setText("Nombre: ");
 
@@ -56,16 +63,19 @@ public class FrmServicio extends javax.swing.JFrame {
 
         jLabel4.setText("Precio:");
 
-        jButton1.setText("Guardar");
+        btGuardar.setText("Guardar");
+        btGuardar.addActionListener(this::btGuardarActionPerformed);
 
-        jButton2.setText("Actualizar");
+        btActualizar.setText("Actualizar");
+        btActualizar.addActionListener(this::btActualizarActionPerformed);
 
-        jButton3.setText("Eliminar");
+        bteliminar.setText("Eliminar");
+        bteliminar.addActionListener(this::bteliminarActionPerformed);
 
-        jButton4.setText("Buscar");
+        btBuscar.setText("Buscar");
 
-        jButton5.setText("Limpiar campos");
-        jButton5.addActionListener(this::jButton5ActionPerformed);
+        btLimpiar.setText("Limpiar campos");
+        btLimpiar.addActionListener(this::btLimpiarActionPerformed);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -87,15 +97,15 @@ public class FrmServicio extends javax.swing.JFrame {
                         .addComponent(txfPrec))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jButton1)
-                            .addComponent(jButton3))
+                            .addComponent(btGuardar)
+                            .addComponent(bteliminar))
                         .addGap(59, 59, 59)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jButton2)
+                            .addComponent(btActualizar)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jButton4)
+                                .addComponent(btBuscar)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 260, Short.MAX_VALUE)
-                                .addComponent(jButton5)))))
+                                .addComponent(btLimpiar)))))
                 .addGap(26, 26, 26))
         );
         layout.setVerticalGroup(
@@ -119,13 +129,13 @@ public class FrmServicio extends javax.swing.JFrame {
                 .addComponent(txfPrec, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(jButton2))
+                    .addComponent(btGuardar)
+                    .addComponent(btActualizar))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 33, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton3)
-                    .addComponent(jButton4)
-                    .addComponent(jButton5))
+                    .addComponent(bteliminar)
+                    .addComponent(btBuscar)
+                    .addComponent(btLimpiar))
                 .addGap(21, 21, 21))
         );
 
@@ -136,12 +146,51 @@ public class FrmServicio extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txfDescActionPerformed
 
-    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+    private void btLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btLimpiarActionPerformed
       txfcode.setText("");
       txfNomb.setText("");       
       txfDesc.setText("");       
       txfPrec.setText("");       
-    }//GEN-LAST:event_jButton5ActionPerformed
+    }//GEN-LAST:event_btLimpiarActionPerformed
+
+    private void btGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btGuardarActionPerformed
+      try{
+          String nombre = txfNomb.getText();
+          String desc = txfDesc.getText();
+          double precio = Double.parseDouble(txfPrec.getText());
+          
+          controlador.agregarServicio(nombre, desc, precio);
+          JOptionPane.showMessageDialog(this, "Servicio guardado correctamente");
+      }catch(NumberFormatException S){
+          JOptionPane.showMessageDialog(this, "El precio debe ser un numero");
+      }
+    }//GEN-LAST:event_btGuardarActionPerformed
+
+    private void btActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btActualizarActionPerformed
+        try{
+            int codigo = Integer.parseInt(txfcode.getText());
+            String desc = txfDesc.getText();
+            double precio = Double.parseDouble(txfPrec.getText());
+            controlador.actualizarServicio(codigo, desc, precio);
+            JOptionPane.showMessageDialog(this, "Se actualizo correctamente");
+        }catch(ServicioNoencontradoException S){
+            JOptionPane.showMessageDialog(this, S.getMessage());
+        }catch(NumberFormatException N){
+            JOptionPane.showMessageDialog(this," El precio debe ser un numero");
+        }
+    }//GEN-LAST:event_btActualizarActionPerformed
+
+    private void bteliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bteliminarActionPerformed
+        try{
+            int codigo = Integer.parseInt(txfcode.getText());
+            controlador.eliminarServicio(codigo);
+            JOptionPane.showMessageDialog(this, "Se elimino el servicio correctamente");
+        }  catch (ServicioNoencontradoException s) {
+             JOptionPane.showMessageDialog(this,s.getMessage());
+        }catch (NumberFormatException N) {
+            JOptionPane.showMessageDialog(this, "El codigo debe ser un numero");
+        }
+    }//GEN-LAST:event_bteliminarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -169,11 +218,11 @@ public class FrmServicio extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
+    private javax.swing.JButton btActualizar;
+    private javax.swing.JButton btBuscar;
+    private javax.swing.JButton btGuardar;
+    private javax.swing.JButton btLimpiar;
+    private javax.swing.JButton bteliminar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
