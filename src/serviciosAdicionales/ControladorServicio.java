@@ -20,17 +20,18 @@ public class ControladorServicio {
          ServicioAdicional servicio = new ServicioAdicional(nombre, descripcion, precio);
          gestor.agregarServicio(servicio);
    }
-   public ServicioAdicional buscarServicio(int codigo) {
-        return gestor.buscarServicio(codigo);
+   public ServicioAdicional buscarServicio(int codigo) 
+         throws ServicioNoencontradoException {
+    return gestor.buscarServicio(codigo);
     }
    public void actualizarServicio(int codigo, String descripcion, double precio)
             throws ServicioNoencontradoException {
-       gestor.actualizarServicio(codigo, descripcion, precio);
+            gestor.actualizarServicio(codigo, descripcion, precio);
    }
    
    public void eliminarServicio(int codigo)
-       throws ServicioNoencontradoException{
-       gestor.eliminarServicio(codigo);
+         throws ServicioNoencontradoException {
+         gestor.eliminarServicio(codigo);
    }
    
    

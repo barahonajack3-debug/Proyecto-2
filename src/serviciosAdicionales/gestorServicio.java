@@ -3,6 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package serviciosAdicionales;
+import excepciones.ServicioNoencontradoException;
 import java.util.ArrayList;
 /**
  *
@@ -19,28 +20,31 @@ public class gestorServicio {
          servicios.add(servicio);
      }
      
-     public ServicioAdicional buscarServicio(int codigo){
-         for (ServicioAdicional servicio : servicios) {
-             if (servicio.getCodigo() == codigo) {
-                return servicio;
-        
-         }
-     }
-         return null;
+     public ServicioAdicional buscarServicio(int codigo)
+      throws ServicioNoencontradoException {
+        for (ServicioAdicional servicio : servicios) {
+        if (servicio.getCodigo() == codigo) {
+            return servicio;
+        }
+    }   throw new ServicioNoencontradoException("No existe un servicio con ese código");
+
+         
   }
      
-     public void actualizarServicio(int codigo, String descripcion, double precio) {
-        ServicioAdicional servicio = buscarServicio(codigo);
-        if (servicio != null) {
-            servicio.setDescripcion(descripcion);
-            servicio.setPrecio(precio);
-        }
+     public void actualizarServicio(int codigo, String descripcion, double precio) 
+        throws ServicioNoencontradoException {
+
+    ServicioAdicional servicio = buscarServicio(codigo);
+
+    servicio.setDescripcion(descripcion);
+    servicio.setPrecio(precio); 
     }
-      public void eliminarServicio(int codigo) {
-        ServicioAdicional servicio = buscarServicio(codigo);
-        if (servicio != null) {
-            servicios.remove(servicio);
-        }
+      public void eliminarServicio(int codigo) 
+        throws ServicioNoencontradoException {
+
+    ServicioAdicional servicio = buscarServicio(codigo);
+
+    servicios.remove(servicio);
     }
 
     public ArrayList<ServicioAdicional> getServicios() {

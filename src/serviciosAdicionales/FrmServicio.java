@@ -55,6 +55,8 @@ public class FrmServicio extends javax.swing.JFrame {
 
         jLabel1.setText("Codigo:");
 
+        txfcode.setEditable(false);
+
         jLabel2.setText("Nombre: ");
 
         jLabel3.setText("Descripción:");
@@ -73,6 +75,7 @@ public class FrmServicio extends javax.swing.JFrame {
         bteliminar.addActionListener(this::bteliminarActionPerformed);
 
         btBuscar.setText("Buscar");
+        btBuscar.addActionListener(this::btBuscarActionPerformed);
 
         btLimpiar.setText("Limpiar campos");
         btLimpiar.addActionListener(this::btLimpiarActionPerformed);
@@ -141,7 +144,14 @@ public class FrmServicio extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+public void cargarServicio(ServicioAdicional servicio) {
 
+    txfcode.setText(String.valueOf(servicio.getCodigo()));
+    txfNomb.setText(servicio.getNombre());
+    txfDesc.setText(servicio.getDescripcion());
+    txfPrec.setText(String.valueOf(servicio.getPrecio()));
+}
+    
     private void txfDescActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txfDescActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txfDescActionPerformed
@@ -191,6 +201,12 @@ public class FrmServicio extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "El codigo debe ser un numero");
         }
     }//GEN-LAST:event_bteliminarActionPerformed
+
+    private void btBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btBuscarActionPerformed
+       
+        frmBuscarServicio buscar = new frmBuscarServicio(controlador,this);
+         buscar.setVisible(true);
+    }//GEN-LAST:event_btBuscarActionPerformed
 
     /**
      * @param args the command line arguments
