@@ -4,6 +4,18 @@
  */
 package contrato;
 
+import Espacio.GestorEspacios;
+import Espacio.TipoEspacio;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.ArrayList;
+import javax.swing.JOptionPane;
+import contrato.GestorContratos;
+import excepciones.CambioEstadoIncorrectoException;
+import excepciones.ClienteNoEncontradoException;
+import excepciones.EspacioNoDisponibleException;
+import excepciones.FechaNoValidaExcepcion;
+
 /**
  *
  * @author USER
@@ -11,12 +23,15 @@ package contrato;
 public class FrmContratos extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(FrmContratos.class.getName());
-
+    
+    private ControladorContratos controlador;
+    private Contratos contratoActual;
     /**
      * Creates new form FrmContratos
      */
     public FrmContratos() {
         initComponents();
+        this.controlador = new ControladorContratos(GestorContratos,GestorCliente,GestorEspacios);
     }
 
     /**
@@ -247,6 +262,7 @@ public class FrmContratos extends javax.swing.JFrame {
         btnCrearContrato.addActionListener(this::btnCrearContratoActionPerformed);
 
         btnActivar.setText("Activar");
+        btnActivar.addActionListener(this::btnActivarActionPerformed);
 
         btnFinalizar.setText("Finalizar");
         btnFinalizar.addActionListener(this::btnFinalizarActionPerformed);
@@ -380,6 +396,24 @@ public class FrmContratos extends javax.swing.JFrame {
 
     private void btnCrearContratoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearContratoActionPerformed
         // TODO add your handling code here:
+        try {
+            String identificacion = txtIndentificacion.getText();
+            TipoEspacio tipo = TipoEspacio.valueOf(CombTipoEspacio.getSelectedItem().toString().toUpperCase());
+             LocalDate inicio = JdcFechaInicio.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+            LocalDate fin = JdcFechaFin.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+
+            contratoActual = controlador.crearContrato(identificacion, tipo, inicio, fin, new ArrayList<>());
+
+            lbNombre.setText(contratoActual.getCliente().getNombre());
+            lbEspacioAsignado.setText(String.valueOf(contratoActual.getEspacio().getNumeroEspacio()));
+            lbSubtotal.setText(String.format("%.2f", contratoActual.calcularSubTotal()));
+            lbImpuestos.setText(String.format("%.2f", contratoActual.calcularImpuestos()));
+            lbTotal.setText(String.format("%.2f", contratoActual.calcularSubTotal() + contratoActual.calcularImpuestos()));
+
+            JOptionPane.showMessageDialog(this, "Contrato creado en estado PENDIENTE.");
+            }catch (ClienteNoEncontradoException | FechaNoValidaExcepcion | EspacioNoDisponibleException e) {
+            JOptionPane.showMessageDialog(this, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_btnCrearContratoActionPerformed
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
@@ -397,6 +431,20 @@ public class FrmContratos extends javax.swing.JFrame {
     private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnSalirActionPerformed
+
+    private void btnActivarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActivarActionPerformed
+        // TODO add your handling code here:
+        try {
+             if (contratoActual == null) {
+                JOptionPane.showMessageDialog(this, "Primero cree o busque un contrato.");
+                return;
+            }
+            controlador.activarContrato(contratoActual);
+            JOptionPane.showMessageDialog(this, "Contrato activado.");
+            }catch (CambioEstadoIncorrectoException e) {
+            JOptionPane.showMessageDialog(this, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_btnActivarActionPerformed
 
     /**
      * @param args the command line arguments
