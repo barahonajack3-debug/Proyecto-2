@@ -31,6 +31,10 @@ public class FrmBuscarContrato extends javax.swing.JFrame {
         this.controlador = controlador;
         this.frmcontrato = frmcontrato;
     }
+    
+    public FrmBuscarContrato() {
+        initComponents();
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -213,28 +217,7 @@ public class FrmBuscarContrato extends javax.swing.JFrame {
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         // TODO add your handling code here:
-        try {
-        String identificacion = txtIdentificacion.getText();
-        TipoEspacio tipo = TipoEspacio.valueOf(CombTipoEspacio.getSelectedItem().toString().toUpperCase());
-        LocalDate inicio = JdcFechaInicio.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-        LocalDate fin = JdcFechaFin.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-
-        contratoActual = controlador.crearContrato(identificacion, tipo, inicio, fin, new ArrayList<>());
-
-        double subtotal = Math.round(contratoActual.calcularSubTotal() * 100.0) / 100.0;
-        double impuestos = Math.round(contratoActual.calcularImpuestos() * 100.0) / 100.0;
-        double total = Math.round((contratoActual.calcularSubTotal() + contratoActual.calcularImpuestos()) * 100.0) / 100.0;
-
-        lbNombre.setText(contratoActual.getCliente().getNombre());
-        lbEspacioAsignado.setText(String.valueOf(contratoActual.getEspacio().getNumeroEspacio()));
-        lbSubtotal.setText("" + subtotal);
-        lbImpuestos.setText("" + impuestos);
-        lbTotal.setText("" + total);
-
-        JOptionPane.showMessageDialog(this, "Contrato creado en estado PENDIENTE.");
-    } catch (ClienteNoEncontradoException | FechaNoValidaExcepcion | EspacioNoDisponibleException e) {
-        JOptionPane.showMessageDialog(this, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-    }
+        this.dispose();
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed

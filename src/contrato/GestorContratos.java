@@ -48,7 +48,7 @@ public class GestorContratos {
         ArrayList<ServicioAdicional> servicios,GestorCliente gestorcliente,GestorEspacios gestorespacio)
         throws ClienteNoEncontradoException,FechaNoValidaExcepcion,EspacioNoDisponibleException{
         //Validar que el cliente exista
-        Cliente.cliente=gestorcliente.BuscarPorIdentificacion(identificacionCliente);
+        Cliente cliente=gestorcliente.buscarPorIdentificacion(identificacionCliente);
         if(cliente==null){
             throw new ClienteNoEncontradoException("No existe ningún cliente registrado con identificación:" + identificacionCliente
                 + " Puede registrarlo desde la opción de Clientes");
@@ -59,7 +59,7 @@ public class GestorContratos {
             throw new EspacioNoDisponibleException("No hay espacio disponible de tipo " + tipo + " para el periodo seleccionado");
         }
         //Crear el contrato (el constructor deja el estado en PENDIENTE)
-        Contratos nuevoContrato= Contratos(Numero,cliente,espacioAsignado,Inicio_Fecha,Fin_Fecha);
+        Contratos nuevoContrato= new Contratos(Numero,cliente,espacioAsignado,Inicio_Fecha,Fin_Fecha);
         //Validar fechas (fecha final posterior a inicial, no nulas, etc.)
         nuevoContrato.validarFechas();
         //Agregar servicios adicionales, si los hay
@@ -111,7 +111,7 @@ public class GestorContratos {
             if(numeroContrato!=null && contrato.getNumeroContrato()!=numeroContrato){
                 continue;
             }
-            if(identificacionCliente!=null){
+            if(identificacionCliente!=null && !contrato.getCliente().getIdentificacion().equals(identificacionCliente)){
                 continue;
             }
             if(numeroEspacio!=null && contrato.getEspacio().getNumeroEspacio()!=numeroEspacio){

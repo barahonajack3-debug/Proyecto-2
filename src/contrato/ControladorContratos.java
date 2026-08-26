@@ -50,6 +50,10 @@ public class ControladorContratos {
         contrato.Cancelar();
     }
  
+    public Cliente buscarCliente(String identificacion) {
+        return gestorCliente.buscarPorIdentificacion(identificacion);
+    }
+
     public ArrayList<Contratos> buscarContratos(Integer numeroContrato, String identificacionCliente,
             Integer numeroEspacio, EstadoContratos estado) {
         return gestorContratos.buscarConFiltro(numeroContrato, identificacionCliente, numeroEspacio, estado);
