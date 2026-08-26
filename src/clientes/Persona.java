@@ -42,4 +42,22 @@ public abstract class Persona {
     public void setTelefono(String telefono) {
         this.telefono = telefono;
     }
+ 
+    protected static void validarIdentificacion (String identificacion){
+        if (identificacion == null || identificacion.isEmpty())
+            throw new IllegalArgumentException("La identificación es obligatoria.");
+    }
+    protected static void validarNombre (String nombreCompleto){
+        if (nombreCompleto == null || nombreCompleto.isEmpty())
+            throw new IllegalArgumentException("El nombre es obligatorio");
+    }
+    protected static void validarTelefono(String telefono){
+        if (telefono == null || telefono.isEmpty())
+            throw new IllegalArgumentException("El numero telefonico es obligatorio");
+    }
+
+    @Override
+    public String toString() {
+        return "Persona{" + "identificacion=" + identificacion + ", nombreCompleto=" + nombreCompleto + ", telefono=" + telefono + '}';
+    }
 }
