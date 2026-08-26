@@ -51,8 +51,6 @@ public class FrmServicio extends javax.swing.JFrame {
         btBuscar = new javax.swing.JButton();
         btLimpiar = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-
         jLabel1.setText("Codigo:");
 
         txfcode.setEditable(false);

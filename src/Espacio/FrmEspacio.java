@@ -58,8 +58,6 @@ public class FrmEspacio extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         chkDisponible = new javax.swing.JCheckBox();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-
         btnNuevo.setText("Nuevo");
         btnNuevo.addActionListener(this::btnNuevoActionPerformed);
 

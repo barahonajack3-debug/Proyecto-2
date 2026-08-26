@@ -47,8 +47,6 @@ public class frmBuscarServicio extends javax.swing.JFrame {
         btnacep = new javax.swing.JButton();
         btncance = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-
         jLabel1.setText("Codigo:");
 
         jLabel2.setText("Nombre:");

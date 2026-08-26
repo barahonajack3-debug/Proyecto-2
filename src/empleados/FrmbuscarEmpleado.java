@@ -49,8 +49,6 @@ public class FrmbuscarEmpleado extends javax.swing.JFrame {
         btacep = new javax.swing.JButton();
         btcanc = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-
         jLabel1.setText("ID:");
 
         jLabel2.setText("Nombre completo:");
