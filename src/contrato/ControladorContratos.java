@@ -56,6 +56,10 @@ public class ControladorContratos {
         return gestorCliente.buscarPorId(identificacion);
     }
 
+    public Contratos buscarContratoPorNumero(int numero) {
+        return gestorContratos.buscarPorNumero(numero);
+    }
+
     public ArrayList<Contratos> buscarContratos(Integer numeroContrato, String identificacionCliente,
             Integer numeroEspacio, EstadoContratos estado) {
         return gestorContratos.buscarConFiltro(numeroContrato, identificacionCliente, numeroEspacio, estado);
