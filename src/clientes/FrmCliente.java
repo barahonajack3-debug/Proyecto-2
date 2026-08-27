@@ -4,6 +4,12 @@
  */
 package clientes;
 
+import excepciones.ClienteNoEncontradoException;
+import excepciones.IDduplicadaException;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Dario R
@@ -11,12 +17,15 @@ package clientes;
 public class FrmCliente extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(FrmCliente.class.getName());
+    private final ControladorCliente controlador;
 
     /**
      * Creates new form FrmCliente
      */
     public FrmCliente() {
         initComponents();
+        controlador = new ControladorCliente();
+        BtnLimpiar.addActionListener(this::BtnLimpiarActionPerformed);
     }
 
     /**
@@ -30,20 +39,17 @@ public class FrmCliente extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        TxtIdentificacion = new javax.swing.JTextPane();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        TxtNombre = new javax.swing.JTextPane();
         BtnBuscarPorId = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
-        jScrollPane3 = new javax.swing.JScrollPane();
-        TxtTelefono = new javax.swing.JTextPane();
         jLabel5 = new javax.swing.JLabel();
-        jScrollPane4 = new javax.swing.JScrollPane();
-        TxtCorreo = new javax.swing.JTextPane();
         jLabel6 = new javax.swing.JLabel();
+        DcFechaNacimiento = new com.toedter.calendar.JDateChooser();
+        TxtIdentificacion = new javax.swing.JTextField();
+        TxtNombre = new javax.swing.JTextField();
+        TxtTelefono = new javax.swing.JTextField();
+        TxtCorreo = new javax.swing.JTextField();
         jPanel2 = new javax.swing.JPanel();
         BtnGuardar = new javax.swing.JButton();
         BtnActualizar = new javax.swing.JButton();
@@ -54,15 +60,11 @@ public class FrmCliente extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel1.setText("Datos personales del cliente");
 
-        jScrollPane1.setViewportView(TxtIdentificacion);
-
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel2.setText("Identificacion *");
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel3.setText("Nombre Completo*");
-
-        jScrollPane2.setViewportView(TxtNombre);
 
         BtnBuscarPorId.setText("Buscar con ID");
         BtnBuscarPorId.addActionListener(this::BtnBuscarPorIdActionPerformed);
@@ -71,12 +73,8 @@ public class FrmCliente extends javax.swing.JFrame {
         jLabel4.setText("Telefono*");
         jLabel4.setVerticalAlignment(javax.swing.SwingConstants.TOP);
 
-        jScrollPane3.setViewportView(TxtTelefono);
-
         jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel5.setText("Correo Electronico*");
-
-        jScrollPane4.setViewportView(TxtCorreo);
 
         jLabel6.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel6.setText("Fecha de nacimiento*");
@@ -95,20 +93,19 @@ public class FrmCliente extends javax.swing.JFrame {
                             .addComponent(jLabel4)
                             .addComponent(jLabel5)
                             .addComponent(jLabel6))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(DcFechaNacimiento, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(6, 6, 6)
-                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(BtnBuscarPorId))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 421, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 421, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addComponent(TxtTelefono, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 249, Short.MAX_VALUE)
+                                    .addComponent(TxtIdentificacion)
+                                    .addComponent(TxtCorreo, javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(TxtNombre, javax.swing.GroupLayout.Alignment.LEADING))
+                                .addGap(25, 25, 25)
+                                .addComponent(BtnBuscarPorId))))
                     .addComponent(jLabel1))
-                .addContainerGap(79, Short.MAX_VALUE))
+                .addGap(124, 124, 124))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -116,27 +113,27 @@ public class FrmCliente extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(BtnBuscarPorId)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel2)))
-                .addGap(12, 12, 12)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel3)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(TxtIdentificacion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(BtnBuscarPorId))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel3)
+                    .addComponent(TxtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(8, 8, 8)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                    .addComponent(TxtTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(12, 12, 12)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel5)
+                    .addComponent(TxtCorreo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel5)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jLabel6))
-                    .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(110, Short.MAX_VALUE))
+                    .addComponent(jLabel6)
+                    .addComponent(DcFechaNacimiento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         BtnGuardar.setText("Guardar");
@@ -175,14 +172,14 @@ public class FrmCliente extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(16, 16, 16)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(73, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(472, Short.MAX_VALUE)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(21, 21, 21))
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -198,16 +195,80 @@ public class FrmCliente extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void BtnBuscarPorIdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnBuscarPorIdActionPerformed
-        // TODO add your handling code here:
+        String identificacion = TxtIdentificacion.getText().trim();
+        if (identificacion.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Ingrese una identificación para buscar.");
+            return;
+        }
+        Cliente cliente = controlador.buscarPorId(identificacion);
+        if (cliente == null) {
+            JOptionPane.showMessageDialog(this, "No se encontró un cliente con esa identificación.");
+            limpiarCampos();
+            return;
+        }
+        poblarCampos(cliente);
     }//GEN-LAST:event_BtnBuscarPorIdActionPerformed
 
     private void BtnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnGuardarActionPerformed
-        // TODO add your handling code here:
+        try {
+            controlador.guardarCliente(
+                    TxtIdentificacion.getText().trim(),
+                    TxtNombre.getText().trim(),
+                    TxtTelefono.getText().trim(),
+                    fechaNacimientoChooser(),
+                    TxtCorreo.getText().trim());
+            JOptionPane.showMessageDialog(this, "Cliente guardado correctamente.");
+            limpiarCampos();
+        } catch (IDduplicadaException | IllegalArgumentException ex) {
+            JOptionPane.showMessageDialog(this, ex.getMessage());
+        }
     }//GEN-LAST:event_BtnGuardarActionPerformed
 
     private void BtnActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnActualizarActionPerformed
-        // TODO add your handling code here:
+        try {
+            controlador.actualizarCliente(
+                    TxtIdentificacion.getText().trim(),
+                    TxtNombre.getText().trim(),
+                    TxtTelefono.getText().trim(),
+                    TxtCorreo.getText().trim());
+            JOptionPane.showMessageDialog(this, "Cliente actualizado correctamente.");
+        } catch (ClienteNoEncontradoException ex) {
+            JOptionPane.showMessageDialog(this, ex.getMessage());
+        }
     }//GEN-LAST:event_BtnActualizarActionPerformed
+
+    private void BtnLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnLimpiarActionPerformed
+        limpiarCampos();
+    }//GEN-LAST:event_BtnLimpiarActionPerformed
+
+    private LocalDate fechaNacimientoChooser() {
+        java.util.Date fecha = DcFechaNacimiento.getDate();
+        if (fecha == null) {
+            throw new IllegalArgumentException("La fecha de nacimiento es obligatoria.");
+        }
+        return fecha.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+    }
+
+    private void limpiarCampos() {
+        TxtIdentificacion.setText("");
+        TxtNombre.setText("");
+        TxtTelefono.setText("");
+        TxtCorreo.setText("");
+        DcFechaNacimiento.setDate(null);
+    }
+
+    private void poblarCampos(Cliente cliente) {
+        TxtIdentificacion.setText(cliente.getIdentificacion());
+        TxtNombre.setText(cliente.getNombreCompleto());
+        TxtTelefono.setText(cliente.getTelefono());
+        TxtCorreo.setText(cliente.getCorreoElectronico());
+        DcFechaNacimiento.setDate(java.util.Date.from(cliente.getFechaNacimiento()
+                .atStartOfDay(ZoneId.systemDefault()).toInstant()));
+    }
+
+    public void mostrarCliente(Cliente cliente) {
+        poblarCampos(cliente);
+    }
 
     /**
      * @param args the command line arguments
@@ -239,10 +300,11 @@ public class FrmCliente extends javax.swing.JFrame {
     private javax.swing.JButton BtnBuscarPorId;
     private javax.swing.JButton BtnGuardar;
     private javax.swing.JButton BtnLimpiar;
-    private javax.swing.JTextPane TxtCorreo;
-    private javax.swing.JTextPane TxtIdentificacion;
-    private javax.swing.JTextPane TxtNombre;
-    private javax.swing.JTextPane TxtTelefono;
+    private com.toedter.calendar.JDateChooser DcFechaNacimiento;
+    private javax.swing.JTextField TxtCorreo;
+    private javax.swing.JTextField TxtIdentificacion;
+    private javax.swing.JTextField TxtNombre;
+    private javax.swing.JTextField TxtTelefono;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -251,9 +313,5 @@ public class FrmCliente extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JScrollPane jScrollPane4;
     // End of variables declaration//GEN-END:variables
 }

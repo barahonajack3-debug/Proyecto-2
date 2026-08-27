@@ -221,8 +221,12 @@ public class FrmBuscarContrato extends javax.swing.JFrame {
 
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
         // TODO add your handling code here:
+        if (resultadosBusqueda == null || resultadosBusqueda.isEmpty()) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Primero realice una búsqueda.", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+            return;
+        }
         int fila = tblResultados.getSelectedRow();
-        if (fila == -1) {
+        if (fila == -1 || fila >= resultadosBusqueda.size()) {
             javax.swing.JOptionPane.showMessageDialog(this, "Seleccione un contrato de la tabla.");
         return;
         }

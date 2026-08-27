@@ -4,17 +4,26 @@
  */
 package clientes;
 
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Dario R
  */
 public class FrmBuscarCliente extends javax.swing.JInternalFrame {
 
+    private final ControladorCliente controlador;
+
     /**
      * Creates new form FrmBuscarCliente
      */
     public FrmBuscarCliente() {
         initComponents();
+        controlador = new ControladorCliente();
+        BtnFitrar.addActionListener(this::BtnFitrarActionPerformed);
+        cargarTabla(controlador.obtenerClientes());
     }
 
     /**
@@ -26,8 +35,6 @@ public class FrmBuscarCliente extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jButton3 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -39,10 +46,6 @@ public class FrmBuscarCliente extends javax.swing.JInternalFrame {
         jPanel2 = new javax.swing.JPanel();
         BtnMostarContrato = new javax.swing.JButton();
         BtnCancelar = new javax.swing.JButton();
-
-        jButton3.setText("jButton3");
-
-        jButton2.setText("jButton2");
 
         setTitle("Buscar Clientes");
 
@@ -110,7 +113,7 @@ public class FrmBuscarCliente extends javax.swing.JInternalFrame {
 
         jPanel2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
-        BtnMostarContrato.setText("Aceptar (Mostar Contrato)");
+        BtnMostarContrato.setText("Aceptar (Mostrar Contrato)");
         BtnMostarContrato.addActionListener(this::BtnMostarContratoActionPerformed);
 
         BtnCancelar.setText("Cancelar ");
@@ -168,12 +171,62 @@ public class FrmBuscarCliente extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void BtnMostarContratoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnMostarContratoActionPerformed
-        // TODO add your handling code here:
+        int fila = TblInfo.getSelectedRow();
+        if (fila < 0) {
+            JOptionPane.showMessageDialog(this, "Seleccione un cliente de la tabla.");
+            return;
+        }
+        String identificacion = TblInfo.getValueAt(fila, 0).toString();
+        Cliente cliente = controlador.buscarPorId(identificacion);
+        if (cliente == null) {
+            JOptionPane.showMessageDialog(this, "El cliente seleccionado ya no está registrado.");
+            return;
+        }
+        FrmCliente frmCliente = new FrmCliente();
+        frmCliente.mostrarCliente(cliente);
+        frmCliente.setVisible(true);
     }//GEN-LAST:event_BtnMostarContratoActionPerformed
 
     private void BtnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnCancelarActionPerformed
-        // TODO add your handling code here:
+        dispose();
     }//GEN-LAST:event_BtnCancelarActionPerformed
+
+    private void BtnFitrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnFitrarActionPerformed
+        String texto = TextBusqueda.getText().trim();
+        List<Cliente> resultado;
+        if (texto.isEmpty()) {
+            resultado = controlador.obtenerClientes();
+        } else {
+            List<Cliente> porId = controlador.buscarConFiltros(texto, null);
+            List<Cliente> porNombre = controlador.buscarConFiltros(null, texto);
+            resultado = new ArrayList<>(porId);
+            for (Cliente c : porNombre) {
+                if (!resultado.contains(c)) {
+                    resultado.add(c);
+                }
+            }
+        }
+        cargarTabla(resultado);
+    }//GEN-LAST:event_BtnFitrarActionPerformed
+
+    private void cargarTabla(List<Cliente> clientes) {
+        javax.swing.table.DefaultTableModel modelo = new javax.swing.table.DefaultTableModel(
+                new Object[]{"Identificacion", "Nombre Completo", "Telefono", "Correo Electronico"}, 0) {
+            @Override
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return false;
+            }
+        };
+        for (Cliente cliente : clientes) {
+            modelo.addRow(new Object[]{
+                cliente.getIdentificacion(),
+                cliente.getNombreCompleto(),
+                cliente.getTelefono(),
+                cliente.getCorreoElectronico()
+            });
+        }
+        TblInfo.setModel(modelo);
+    }
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -182,8 +235,6 @@ public class FrmBuscarCliente extends javax.swing.JInternalFrame {
     private javax.swing.JButton BtnMostarContrato;
     private javax.swing.JTable TblInfo;
     private javax.swing.JTextPane TextBusqueda;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;

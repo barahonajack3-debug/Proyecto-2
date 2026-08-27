@@ -17,6 +17,9 @@ public class Cliente extends Persona {
 
     public Cliente(LocalDate fechaNacimiento, String correoElectronico, String identificacion, String nombreCompleto, String telefono) {
         super(identificacion, nombreCompleto, telefono);
+        validarIdentificacion(identificacion);
+        validarNombre(nombreCompleto);
+        validarTelefono(telefono);
         this.fechaNacimiento = fechaNacimiento;
         this.correoElectronico = correoElectronico;
         validarFechaNacimiento(fechaNacimiento);
@@ -50,8 +53,12 @@ public class Cliente extends Persona {
     }
   }
     private void validarCorreo(String correo){
-        if (correo == null){
+        if (correo == null || correo.trim().isEmpty()){
             throw new IllegalArgumentException ("El correo es obligatorio");
+        }
+        String patron = "^[^@\\s]+@[^@\\s]+\\.[^@\\s]+$";
+        if (!correo.trim().matches(patron)){
+            throw new IllegalArgumentException("El correo electrónico no tiene un formato válido.");
         }
     }
 }
