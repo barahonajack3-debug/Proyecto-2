@@ -4,11 +4,6 @@
  */
 package contrato;
 
-import Espacio.TipoEspacio;
-import excepciones.ClienteNoEncontradoException;
-import excepciones.EspacioNoDisponibleException;
-import excepciones.FechaNoValidaExcepcion;
-import javax.swing.JOptionPane;
 
 /**
  *
@@ -111,7 +106,7 @@ public class FrmBuscarContrato extends javax.swing.JFrame {
         btnCancelar.addActionListener(this::btnCancelarActionPerformed);
 
         btnAceptar.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        btnAceptar.setText("Acectar");
+        btnAceptar.setText("Aceptar");
         btnAceptar.addActionListener(this::btnAceptarActionPerformed);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);

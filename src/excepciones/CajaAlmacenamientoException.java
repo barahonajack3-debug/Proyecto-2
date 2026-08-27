@@ -8,13 +8,13 @@ package excepciones;
  *
  * @author USER
  */
-public class CajaAlmecenamientoException extends Exception{
+public class CajaAlmacenamientoException extends Exception{
     
-    public CajaAlmecenamientoException(String mensaje){
+    public CajaAlmacenamientoException(String mensaje){
         super(mensaje);
     }
     
-    public CajaAlmecenamientoException(String mensaje, Throwable causa){
+    public CajaAlmacenamientoException(String mensaje, Throwable causa){
         super(mensaje,causa);
     }
 }

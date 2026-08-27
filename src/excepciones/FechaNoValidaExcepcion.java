@@ -8,7 +8,7 @@ package excepciones;
  *
  * @author USER
  */
-public class FechaNoValidaExcepcion extends CajaAlmecenamientoException{
+public class FechaNoValidaExcepcion extends CajaAlmacenamientoException{
     
     public FechaNoValidaExcepcion(String mensaje){
         super(mensaje);

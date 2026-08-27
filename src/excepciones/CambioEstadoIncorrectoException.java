@@ -8,7 +8,7 @@ package excepciones;
  *
  * @author USER
  */
-public class CambioEstadoIncorrectoException extends CajaAlmecenamientoException {
+public class CambioEstadoIncorrectoException extends CajaAlmacenamientoException {
     
     public CambioEstadoIncorrectoException(String mensaje) {
         super(mensaje);
