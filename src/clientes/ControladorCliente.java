@@ -14,10 +14,12 @@ import java.util.List;
  * @author Dario R
  */
 public class ControladorCliente {
-  private final GestorCliente gestorCliente;
+  private GestorCliente gestorCliente;
+  private ControladorCliente controlador;
 
-    public ControladorCliente() {
-        gestorCliente = new GestorCliente();
+    public ControladorCliente(GestorCliente gestorCliente, ControladorCliente controlador) {
+        this.gestorCliente = gestorCliente;
+        this.controlador = controlador;
     }
     public void guardarCliente(String identificacion, String nombreCompleto,
     String telefono, LocalDate fechaNacimiento, String correoElectronico)
