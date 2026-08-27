@@ -5,6 +5,8 @@
 package clientes;
 
 import java.util.LinkedList;
+import contrato.GestorContratos;
+import excepciones.ClienteConContratosVinculadosException;
 import excepciones.ClienteNoEncontradoException;
 import excepciones.IDduplicadaException;
 import java.util.ArrayList;
@@ -14,9 +16,18 @@ import java.util.List;
  * @author Dario R
  */
 public class GestorCliente {
+    private static GestorCliente instancia;
     private final LinkedList<Cliente> clientes;
-    public GestorCliente(){
+
+    private GestorCliente(){
         clientes = new LinkedList<>();
+    }
+
+    public static GestorCliente getInstancia() {
+        if (instancia == null) {
+            instancia = new GestorCliente();
+        }
+        return instancia;
     }
     public void agregarCliente (Cliente cliente ) throws IDduplicadaException{
         if (cliente == null){
@@ -47,8 +58,12 @@ public class GestorCliente {
     }
 
     public void eliminarCliente (String identificacion)
-    throws ClienteNoEncontradoException {
+    throws ClienteNoEncontradoException, ClienteConContratosVinculadosException {
             Cliente cliente =obtenerClienteRegistrado(identificacion);
+            if (GestorContratos.getInstancia().tieneContratosPendientesOActivos(identificacion)) {
+                throw new ClienteConContratosVinculadosException(
+                        "No se puede eliminar el cliente porque tiene contratos pendientes o activos.");
+            }
             clientes.remove(cliente);
     }
     public List<Cliente> buscarporFiltro( String identificacion, String nombreCompleto){

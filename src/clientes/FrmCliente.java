@@ -4,6 +4,7 @@
  */
 package clientes;
 
+import excepciones.ClienteConContratosVinculadosException;
 import excepciones.ClienteNoEncontradoException;
 import excepciones.IDduplicadaException;
 import java.time.LocalDate;
@@ -54,6 +55,7 @@ public class FrmCliente extends javax.swing.JFrame {
         BtnGuardar = new javax.swing.JButton();
         BtnActualizar = new javax.swing.JButton();
         BtnLimpiar = new javax.swing.JButton();
+        BtnEliminar = new javax.swing.JButton();
 
         setTitle("Clientes");
 
@@ -66,6 +68,7 @@ public class FrmCliente extends javax.swing.JFrame {
         jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel3.setText("Nombre Completo*");
 
+        BtnBuscarPorId.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos48/contact (4).png"))); // NOI18N
         BtnBuscarPorId.setText("Buscar con ID");
         BtnBuscarPorId.addActionListener(this::BtnBuscarPorIdActionPerformed);
 
@@ -96,32 +99,33 @@ public class FrmCliente extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(DcFechaNacimiento, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                    .addComponent(TxtTelefono, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 249, Short.MAX_VALUE)
-                                    .addComponent(TxtIdentificacion)
-                                    .addComponent(TxtCorreo, javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(TxtNombre, javax.swing.GroupLayout.Alignment.LEADING))
-                                .addGap(25, 25, 25)
-                                .addComponent(BtnBuscarPorId))))
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(TxtTelefono, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 249, Short.MAX_VALUE)
+                                .addComponent(TxtIdentificacion)
+                                .addComponent(TxtCorreo, javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(TxtNombre, javax.swing.GroupLayout.Alignment.LEADING))))
                     .addComponent(jLabel1))
-                .addGap(124, 124, 124))
+                .addGap(18, 18, 18)
+                .addComponent(BtnBuscarPorId)
+                .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(TxtIdentificacion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel2)
+                            .addComponent(TxtIdentificacion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addComponent(BtnBuscarPorId))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel3)
-                    .addComponent(TxtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(8, 8, 8)
+                .addGap(15, 15, 15)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(TxtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel3))
+                .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
                     .addComponent(TxtTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -133,53 +137,56 @@ public class FrmCliente extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel6)
                     .addComponent(DcFechaNacimiento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(32, Short.MAX_VALUE))
         );
-
-        BtnGuardar.setText("Guardar");
-        BtnGuardar.addActionListener(this::BtnGuardarActionPerformed);
-
-        BtnActualizar.setText("Actualizar");
-        BtnActualizar.addActionListener(this::BtnActualizarActionPerformed);
-
-        BtnLimpiar.setText("Limpiar");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(BtnGuardar)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(BtnActualizar)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(BtnLimpiar)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGap(0, 301, Short.MAX_VALUE)
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(BtnGuardar)
-                    .addComponent(BtnActualizar)
-                    .addComponent(BtnLimpiar))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGap(0, 55, Short.MAX_VALUE)
         );
+
+        BtnGuardar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos32/filesave (4).png"))); // NOI18N
+        BtnGuardar.setText("Guardar");
+        BtnGuardar.addActionListener(this::BtnGuardarActionPerformed);
+
+        BtnActualizar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos32/emblem-system.png"))); // NOI18N
+        BtnActualizar.setText("Actualizar");
+        BtnActualizar.addActionListener(this::BtnActualizarActionPerformed);
+
+        BtnLimpiar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos48/application_vnd.oasis.opendocument.spreadsheet (4).png"))); // NOI18N
+        BtnLimpiar.setText("Limpiar");
+
+        BtnEliminar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos48/button_cancel (4).png"))); // NOI18N
+        BtnEliminar.setText("Eliminar");
+        BtnEliminar.addActionListener(this::BtnEliminarActionPerformed);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(472, Short.MAX_VALUE)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(21, 21, 21))
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(BtnGuardar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(BtnActualizar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(BtnLimpiar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(BtnEliminar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(21, 21, 21))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -187,7 +194,13 @@ public class FrmCliente extends javax.swing.JFrame {
                 .addGap(20, 20, 20)
                 .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(40, 40, 40)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(BtnGuardar)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(BtnActualizar)
+                        .addComponent(BtnLimpiar)
+                        .addComponent(BtnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(17, 17, 17))
         );
 
@@ -219,8 +232,10 @@ public class FrmCliente extends javax.swing.JFrame {
                     TxtCorreo.getText().trim());
             JOptionPane.showMessageDialog(this, "Cliente guardado correctamente.");
             limpiarCampos();
-        } catch (IDduplicadaException | IllegalArgumentException ex) {
-            JOptionPane.showMessageDialog(this, ex.getMessage());
+        } catch (IDduplicadaException e) {
+            JOptionPane.showMessageDialog(this, e.getMessage());
+        } catch (IllegalArgumentException e) {
+            JOptionPane.showMessageDialog(this, e.getMessage());
         }
     }//GEN-LAST:event_BtnGuardarActionPerformed
 
@@ -240,6 +255,27 @@ public class FrmCliente extends javax.swing.JFrame {
     private void BtnLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnLimpiarActionPerformed
         limpiarCampos();
     }//GEN-LAST:event_BtnLimpiarActionPerformed
+
+    private void BtnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnEliminarActionPerformed
+        String identificacion = TxtIdentificacion.getText().trim();
+        if (identificacion.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Digite la identificación del cliente a eliminar.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        int opcion = JOptionPane.showConfirmDialog(this,
+                "¿Desea eliminar el cliente con identificación " + identificacion + "?",
+                "Confirmar", JOptionPane.YES_NO_OPTION);
+        if (opcion != JOptionPane.YES_OPTION) {
+            return;
+        }
+        try {
+            controlador.eliminarCliente(identificacion);
+            JOptionPane.showMessageDialog(this, "Cliente eliminado.");
+            limpiarCampos();
+        } catch (ClienteNoEncontradoException | ClienteConContratosVinculadosException e) {
+            JOptionPane.showMessageDialog(this, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_BtnEliminarActionPerformed
 
     private LocalDate fechaNacimientoChooser() {
         java.util.Date fecha = DcFechaNacimiento.getDate();
@@ -298,6 +334,7 @@ public class FrmCliente extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton BtnActualizar;
     private javax.swing.JButton BtnBuscarPorId;
+    private javax.swing.JButton BtnEliminar;
     private javax.swing.JButton BtnGuardar;
     private javax.swing.JButton BtnLimpiar;
     private com.toedter.calendar.JDateChooser DcFechaNacimiento;

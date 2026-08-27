@@ -22,7 +22,7 @@ public class registroEmpleado extends javax.swing.JFrame {
     public registroEmpleado() {
         initComponents();
         
-        gestor = new gestorEmpleado();
+        gestor = gestorEmpleado.getInstancia();
         controlador = new ControladorEmpleado (gestor);
         
         cbxpuesto.removeAllItems();

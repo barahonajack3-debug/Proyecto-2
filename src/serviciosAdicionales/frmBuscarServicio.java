@@ -181,7 +181,13 @@ public class frmBuscarServicio extends javax.swing.JFrame {
         try {
             int codigo = Integer.parseInt(tbTableSer.getValueAt(F, 0).toString());
             ServicioAdicional servicio = controlador.buscarServicio(codigo);
-            frmServicio.cargarServicio(servicio);
+            if (frmServicio != null) {
+                frmServicio.cargarServicio(servicio);
+            } else {
+                FrmServicio ventana = new FrmServicio();
+                ventana.cargarServicio(servicio);
+                ventana.setVisible(true);
+            }
             dispose();
         } catch (ServicioNoencontradoException NO) {
             JOptionPane.showMessageDialog(this, NO.getMessage());

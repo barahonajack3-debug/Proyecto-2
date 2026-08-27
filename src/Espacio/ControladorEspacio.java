@@ -17,7 +17,7 @@ public class ControladorEspacio {
     private final GestorEspacios gestorEspacios;
 
     public ControladorEspacio() {
-        gestorEspacios = new GestorEspacios();
+        gestorEspacios = GestorEspacios.getInstancia();
     }
 
     public void guardarEspacio(int numeroEspacio, TipoEspacio tipo,

@@ -60,8 +60,19 @@ public class ControladorContratos {
         return gestorContratos.buscarPorNumero(numero);
     }
 
+    public int contarEspaciosDisponibles(TipoEspacio tipo, LocalDate Fecha_Inicio, LocalDate Fecha_Fin) {
+        return gestorContratos.contarEspaciosDisponibles(tipo, Fecha_Inicio, Fecha_Fin, gestorEspacios);
+    }
+
     public ArrayList<Contratos> buscarContratos(Integer numeroContrato, String identificacionCliente,
             Integer numeroEspacio, EstadoContratos estado) {
-        return gestorContratos.buscarConFiltro(numeroContrato, identificacionCliente, numeroEspacio, estado);
+        return gestorContratos.buscarConFiltro(numeroContrato, identificacionCliente, numeroEspacio, estado,
+                null, null);
+    }
+
+    public ArrayList<Contratos> buscarContratos(Integer numeroContrato, String identificacionCliente,
+            Integer numeroEspacio, EstadoContratos estado, LocalDate fechaDesde, LocalDate fechaHasta) {
+        return gestorContratos.buscarConFiltro(numeroContrato, identificacionCliente, numeroEspacio, estado,
+                fechaDesde, fechaHasta);
     }
 }

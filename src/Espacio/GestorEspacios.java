@@ -8,10 +8,18 @@ import java.util.List;
 
 public class GestorEspacios {
 
+    private static GestorEspacios instancia;
     private final LinkedList<Espacios> espacios;
 
-    public GestorEspacios() {
+    private GestorEspacios() {
         espacios = new LinkedList<>();
+    }
+
+    public static GestorEspacios getInstancia() {
+        if (instancia == null) {
+            instancia = new GestorEspacios();
+        }
+        return instancia;
     }
 
     public void agregarEspacio(Espacios espacio) throws NumeroEspacioDuplicadoException {

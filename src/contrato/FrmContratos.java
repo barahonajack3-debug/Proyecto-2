@@ -33,11 +33,11 @@ public class FrmContratos extends javax.swing.JFrame {
      */
     public FrmContratos() {
         initComponents();
-        GestorContratos gestorContratos = new GestorContratos();
-        GestorCliente gestorCliente = new GestorCliente();
-        GestorEspacios gestorEspacios = new GestorEspacios();
+        GestorContratos gestorContratos = GestorContratos.getInstancia();
+        GestorCliente gestorCliente = GestorCliente.getInstancia();
+        GestorEspacios gestorEspacios = GestorEspacios.getInstancia();
         this.controlador = new ControladorContratos(gestorContratos, gestorCliente, gestorEspacios);
-        gestorServicios = new serviciosAdicionales.gestorServicio();
+        gestorServicios = serviciosAdicionales.gestorServicio.getInstancia();
     }
 
     /**
@@ -486,6 +486,13 @@ public class FrmContratos extends javax.swing.JFrame {
             LocalDate inicio = fechaInicio.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
             LocalDate fin = fechaFin.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
 
+            int disponibles = controlador.contarEspaciosDisponibles(tipo, inicio, fin);
+            if (disponibles == 0) {
+                JOptionPane.showMessageDialog(this, "No hay espacio disponible de tipo " + tipo + " para el periodo seleccionado.", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            JOptionPane.showMessageDialog(this, "Cantidad de espacios disponibles de tipo " + tipo + ": " + disponibles);
+
             contratoActual = controlador.crearContrato(identificacion, tipo, inicio, fin, serviciosSeleccionados);
 
             double subtotal = Math.round(contratoActual.calcularSubTotal() * 100.0) / 100.0;
@@ -498,16 +505,32 @@ public class FrmContratos extends javax.swing.JFrame {
             lbImpuestos.setText("" + impuestos);
             lbTotal.setText("" + total);
             JOptionPane.showMessageDialog(this, "Contrato creado en estado PENDIENTE.");
-        }catch (ClienteNoEncontradoException | FechaNoValidaExcepcion | EspacioNoDisponibleException e) {
+        } catch (ClienteNoEncontradoException e) {
+            int opcion = JOptionPane.showConfirmDialog(this,
+                    "No existe un cliente con esa identificación.\n¿Desea registrarlo ahora?",
+                    "Cliente no encontrado", JOptionPane.YES_NO_OPTION);
+            if (opcion == JOptionPane.YES_OPTION) {
+                new clientes.FrmCliente().setVisible(true);
+            }
+        } catch (FechaNoValidaExcepcion | EspacioNoDisponibleException e) {
             JOptionPane.showMessageDialog(this, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
     }
     }//GEN-LAST:event_btnCrearContratoActionPerformed
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
         String identificacion = txtIndentificacion.getText();
+        if (identificacion.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Digite la identificación del cliente.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
         Cliente cliente = controlador.buscarCliente(identificacion);
         if (cliente == null) {
-            JOptionPane.showMessageDialog(this, "No existe ningún cliente con esa identificación. Regístrelo primero en Clientes.");
+            int opcion = JOptionPane.showConfirmDialog(this,
+                    "No existe un cliente con esa identificación.\n¿Desea registrarlo ahora?",
+                    "Cliente no encontrado", JOptionPane.YES_NO_OPTION);
+            if (opcion == JOptionPane.YES_OPTION) {
+                new clientes.FrmCliente().setVisible(true);
+            }
             lbNombre.setText("");
         } else {
             lbNombre.setText(cliente.getNombreCompleto());

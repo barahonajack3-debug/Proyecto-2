@@ -3,6 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package clientes;
+import excepciones.ClienteConContratosVinculadosException;
 import excepciones.ClienteNoEncontradoException;
 import excepciones.IDduplicadaException;
 import java.time.LocalDate;
@@ -16,7 +17,7 @@ public class ControladorCliente {
   private final GestorCliente gestorCliente;
 
     public ControladorCliente() {
-        gestorCliente = new GestorCliente();
+        gestorCliente = GestorCliente.getInstancia();
     }
     public void guardarCliente(String identificacion, String nombreCompleto,
     String telefono, LocalDate fechaNacimiento, String correoElectronico)
@@ -34,7 +35,7 @@ public class ControladorCliente {
         gestorCliente.actualizarCliente(identificacion, nombreCompleto, telefono, correoElectronico);
     }
     public void eliminarCliente(String identificacion)
-    throws ClienteNoEncontradoException {
+    throws ClienteNoEncontradoException, ClienteConContratosVinculadosException {
         gestorCliente.eliminarCliente(identificacion);
     }
     public List<Cliente> buscarConFiltros (String identificacion, String nombre){

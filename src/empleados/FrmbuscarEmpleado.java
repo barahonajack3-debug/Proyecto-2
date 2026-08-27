@@ -200,7 +200,17 @@ public class FrmbuscarEmpleado extends javax.swing.JFrame {
         ); 
           }else{ String ID = tblbusca.getValueAt(fila, 0).toString();
           Empleado empleado = controlador.buscarEmpleado(ID);
-          frmEmpleado.buscarEmpleado(empleado);
+          if (empleado == null) {
+              JOptionPane.showMessageDialog(this, "No se encontró el empleado seleccionado.");
+              return;
+          }
+          if (frmEmpleado != null) {
+              frmEmpleado.buscarEmpleado(empleado);
+          } else {
+              registroEmpleado ventana = new registroEmpleado();
+              ventana.buscarEmpleado(empleado);
+              ventana.setVisible(true);
+          }
           dispose();
     }
     }//GEN-LAST:event_btacepActionPerformed

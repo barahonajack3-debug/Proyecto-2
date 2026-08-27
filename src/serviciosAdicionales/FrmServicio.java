@@ -22,7 +22,7 @@ public class FrmServicio extends javax.swing.JFrame {
     public FrmServicio() {
         initComponents();
         
-         gestor = new gestorServicio();
+         gestor = gestorServicio.getInstancia();
     controlador = new ControladorServicio(gestor);
 
     

@@ -56,8 +56,8 @@ public class Cliente extends Persona {
         if (correo == null || correo.trim().isEmpty()){
             throw new IllegalArgumentException ("El correo es obligatorio");
         }
-        String patron = "^[^@\\s]+@[^@\\s]+\\.[^@\\s]+$";
-        if (!correo.trim().matches(patron)){
+        String c = correo.trim();
+        if (!c.contains("@") || !c.contains(".")){
             throw new IllegalArgumentException("El correo electrónico no tiene un formato válido.");
         }
     }

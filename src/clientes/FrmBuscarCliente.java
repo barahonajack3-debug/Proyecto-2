@@ -55,7 +55,9 @@ public class FrmBuscarCliente extends javax.swing.JInternalFrame {
 
         jScrollPane1.setViewportView(TextBusqueda);
 
+        BtnFitrar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos32/filefind (4).png"))); // NOI18N
         BtnFitrar.setText("Filtrar");
+        BtnFitrar.addActionListener(this::BtnFitrarActionPerformed);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -68,7 +70,7 @@ public class FrmBuscarCliente extends javax.swing.JInternalFrame {
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 368, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(BtnFitrar)
-                .addContainerGap(32, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -78,7 +80,7 @@ public class FrmBuscarCliente extends javax.swing.JInternalFrame {
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(BtnFitrar)
                     .addComponent(jLabel2))
-                .addContainerGap(13, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jLabel1.setText("Fitros de Busqueda");
@@ -113,9 +115,11 @@ public class FrmBuscarCliente extends javax.swing.JInternalFrame {
 
         jPanel2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
+        BtnMostarContrato.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos32/emblem-ok.png"))); // NOI18N
         BtnMostarContrato.setText("Aceptar (Mostrar Contrato)");
         BtnMostarContrato.addActionListener(this::BtnMostarContratoActionPerformed);
 
+        BtnCancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos32/emblem-nowrite.png"))); // NOI18N
         BtnCancelar.setText("Cancelar ");
         BtnCancelar.addActionListener(this::BtnCancelarActionPerformed);
 
@@ -126,9 +130,9 @@ public class FrmBuscarCliente extends javax.swing.JInternalFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(BtnMostarContrato)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(BtnCancelar)
-                .addGap(20, 20, 20))
+                .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -137,7 +141,7 @@ public class FrmBuscarCliente extends javax.swing.JInternalFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(BtnMostarContrato)
                     .addComponent(BtnCancelar))
-                .addContainerGap(7, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -147,12 +151,14 @@ public class FrmBuscarCliente extends javax.swing.JInternalFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(16, 16, 16)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 271, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 632, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jScrollPane2)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel1)
+                            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -192,38 +198,22 @@ public class FrmBuscarCliente extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_BtnCancelarActionPerformed
 
     private void BtnFitrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnFitrarActionPerformed
-        String texto = TextBusqueda.getText().trim();
-        List<Cliente> resultado;
-        if (texto.isEmpty()) {
-            resultado = controlador.obtenerClientes();
-        } else {
-            List<Cliente> porId = controlador.buscarConFiltros(texto, null);
-            List<Cliente> porNombre = controlador.buscarConFiltros(null, texto);
-            resultado = new ArrayList<>(porId);
-            for (Cliente c : porNombre) {
-                if (!resultado.contains(c)) {
-                    resultado.add(c);
-                }
-            }
-        }
-        cargarTabla(resultado);
+        // TODO add your handling code here:
     }//GEN-LAST:event_BtnFitrarActionPerformed
 
     private void cargarTabla(List<Cliente> clientes) {
-        javax.swing.table.DefaultTableModel modelo = new javax.swing.table.DefaultTableModel(
-                new Object[]{"Identificacion", "Nombre Completo", "Telefono", "Correo Electronico"}, 0) {
-            @Override
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return false;
-            }
-        };
-        for (Cliente cliente : clientes) {
-            modelo.addRow(new Object[]{
-                cliente.getIdentificacion(),
-                cliente.getNombreCompleto(),
-                cliente.getTelefono(),
-                cliente.getCorreoElectronico()
-            });
+        javax.swing.table.DefaultTableModel modelo = new javax.swing.table.DefaultTableModel();
+        modelo.addColumn("Identificacion");
+        modelo.addColumn("Nombre Completo");
+        modelo.addColumn("Telefono");
+        modelo.addColumn("Correo Electronico");
+        for (int i = 0; i < clientes.size(); i++) {
+            Cliente cliente = clientes.get(i);
+            String[] fila = {cliente.getIdentificacion(),
+                             cliente.getNombreCompleto(),
+                             cliente.getTelefono(),
+                             cliente.getCorreoElectronico()};
+            modelo.addRow(fila);
         }
         TblInfo.setModel(modelo);
     }

@@ -24,6 +24,7 @@ import serviciosAdicionales.ServicioAdicional;
  */
 public class GestorContratos {
     //=====Atributos=====
+    private static GestorContratos instancia;
     private ArrayList<Contratos> contratos;
     private HashMap<Integer, Contratos> mapaContratos;
     private int Numero;
@@ -39,10 +40,17 @@ public class GestorContratos {
     }
     
     //=====Constructor=====
-    public GestorContratos() {
+    private GestorContratos() {
         this.contratos = new ArrayList<>();
         this.mapaContratos = new HashMap<>();
         this.Numero = 1;
+    }
+
+    public static GestorContratos getInstancia() {
+        if (instancia == null) {
+            instancia = new GestorContratos();
+        }
+        return instancia;
     }
     
     //=====Funciones=====
@@ -96,6 +104,32 @@ public class GestorContratos {
         }
         return null;
     }
+
+    //Cuenta cuantos espacios del tipo pedido quedan libres para el periodo dado.
+    public int contarEspaciosDisponibles(TipoEspacio tipo,LocalDate Inicio_Fecha,LocalDate Fin_Fecha,
+        GestorEspacios gestorespacio){
+        int contador = 0;
+        List<Espacios> candidatos = gestorespacio.buscarConFiltros(null,tipo,null,null,null);
+        for (Espacios espacio : candidatos) {
+            if (!verificarConflictosFechas(espacio, Inicio_Fecha, Fin_Fecha)) {
+                contador++;
+            }
+        }
+        return contador;
+    }
+
+    //Indica si el cliente tiene contratos PENDIENTES o ACTIVOS (no puede eliminarse).
+    public boolean tieneContratosPendientesOActivos(String identificacionCliente){
+        for(Contratos contrato:contratos){
+            boolean igualCliente=contrato.getCliente().getIdentificacion().equals(identificacionCliente);
+            boolean estadoRevelado=contrato.getEstado()== EstadoContratos.PENDIENTE
+            || contrato.getEstado() == EstadoContratos.ACTIVO;
+            if(igualCliente && estadoRevelado){
+                return true;
+            }
+        }
+        return false;
+    }
     
     //Funcion para verificar si el espacio dado tiene conflicto de fechas con algún
     //contrato PENDIENTE o ACTIVO ya registrado.
@@ -114,9 +148,9 @@ public class GestorContratos {
     }
     
     //Funcion para buscar con filtros para FrmBuscarContrato.
-    //Cualquier parámetroen null/vacío se ignora.
+    //Cualquier parámetro en null/vacío se ignora.
     public ArrayList<Contratos> buscarConFiltro(Integer numeroContrato,String identificacionCliente,
-        Integer numeroEspacio,EstadoContratos estado){
+        Integer numeroEspacio,EstadoContratos estado,LocalDate fechaDesde,LocalDate fechaHasta){
         ArrayList<Contratos> resultado= new ArrayList<>();
         for(Contratos contrato:contratos){
             if(numeroContrato!=null && contrato.getNumeroContrato()!=numeroContrato){
@@ -129,6 +163,12 @@ public class GestorContratos {
                 continue;
             }
             if(estado!=null && contrato.getEstado()!= estado){
+                continue;
+            }
+            if(fechaDesde!=null && contrato.getFin_Fecha().isBefore(fechaDesde)){
+                continue;
+            }
+            if(fechaHasta!=null && contrato.getInicio_Fecha().isAfter(fechaHasta)){
                 continue;
             }
             resultado.add(contrato);

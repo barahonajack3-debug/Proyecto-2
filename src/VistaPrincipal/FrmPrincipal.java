@@ -64,6 +64,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
         frmBuscarCliente1.setVisible(false);
 
         btnSalir.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnSalir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos48/application-exit.png"))); // NOI18N
         btnSalir.setText("Salir");
         btnSalir.addActionListener(this::btnSalirActionPerformed);
 
@@ -75,7 +76,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
         jDesktopPane1Layout.setHorizontalGroup(
             jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jDesktopPane1Layout.createSequentialGroup()
-                .addContainerGap(493, Short.MAX_VALUE)
+                .addContainerGap(458, Short.MAX_VALUE)
                 .addGroup(jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(frmBuscarCliente1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnSalir, javax.swing.GroupLayout.Alignment.TRAILING))
@@ -85,7 +86,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
             jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jDesktopPane1Layout.createSequentialGroup()
                 .addComponent(frmBuscarCliente1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 308, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 276, Short.MAX_VALUE)
                 .addComponent(btnSalir)
                 .addContainerGap())
         );
@@ -185,7 +186,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_MenuEspaciosActionPerformed
 
     private void MenuBuscarServiciosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuBuscarServiciosActionPerformed
-        gestorServicio gestor = new gestorServicio();
+        gestorServicio gestor = gestorServicio.getInstancia();
         ControladorServicio controlador = new ControladorServicio(gestor);
         new frmBuscarServicio(controlador, null).setVisible(true);
     }//GEN-LAST:event_MenuBuscarServiciosActionPerformed
@@ -195,7 +196,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_MenuBuscarClienteActionPerformed
 
     private void MenuBuscarEmpleadosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuBuscarEmpleadosActionPerformed
-        gestorEmpleado gestor = new gestorEmpleado();
+        gestorEmpleado gestor = gestorEmpleado.getInstancia();
         ControladorEmpleado controlador = new ControladorEmpleado(gestor);
         new FrmbuscarEmpleado(controlador, null).setVisible(true);
     }//GEN-LAST:event_MenuBuscarEmpleadosActionPerformed

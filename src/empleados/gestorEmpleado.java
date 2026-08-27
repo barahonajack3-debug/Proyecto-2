@@ -16,11 +16,19 @@ import java.util.ArrayList;
 public class gestorEmpleado {
     
 
+    private static gestorEmpleado instancia;
     private ArrayList<Empleado> empleados;
     
-    public gestorEmpleado(){
+    private gestorEmpleado(){
     empleados = new ArrayList<>();
 }
+
+    public static gestorEmpleado getInstancia() {
+        if (instancia == null) {
+            instancia = new gestorEmpleado();
+        }
+        return instancia;
+    }
     public void agregarEmpleado(Empleado empleado)
         throws IDduplicadaException{
         if(empleado.getID().isEmpty()||empleado.getNombre().isEmpty()||empleado.getTelefono().isEmpty()){
@@ -61,6 +69,9 @@ public class gestorEmpleado {
        throw new IllegalArgumentException("Faltan datos");
         }
         Empleado empleado = buscarEmpleado(ID);
+        if (empleado == null) {
+            throw new EmpleadoNoencontradoException("No existe empleado con ese ID");
+        }
         empleado.setNombre(Nombre);
         empleado.setTelefono(Telefono);
         empleado.setPuesto(puesto);

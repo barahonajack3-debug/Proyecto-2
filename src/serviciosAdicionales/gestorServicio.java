@@ -10,10 +10,18 @@ import java.util.ArrayList;
  * @author EMMAXZZ
  */
 public class gestorServicio {
+     private static gestorServicio instancia;
      private ArrayList<ServicioAdicional> servicios;
-       
-     public gestorServicio() {
+        
+     private gestorServicio() {
         servicios = new ArrayList<>();
+    }
+
+     public static gestorServicio getInstancia() {
+        if (instancia == null) {
+            instancia = new gestorServicio();
+        }
+        return instancia;
     }
      
      public void agregarServicio(ServicioAdicional servicio){
