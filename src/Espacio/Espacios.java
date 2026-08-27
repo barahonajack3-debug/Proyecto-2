@@ -9,22 +9,22 @@ package Espacio;
  * @author Usuario
  */
 public class Espacios {
-    private final int numeroEspacio;
+    private int numeroEspacio;
     private TipoEspacio tipo;
     private double tamaño;
     private double precioMensual;
     private boolean disponible;
 
     
-   public Espacios(int numeroEspacio, TipoEspacio tipo){
-        validarNumeroEspacio(numeroEspacio);
-        validarTipo(tipo);
-
+    public Espacios(int numeroEspacio, TipoEspacio tipo) {
+        if (numeroEspacio <= 0 || tipo == null) {
+            throw new IllegalArgumentException("Datos del espacio incorrectos.");
+        }
         this.numeroEspacio = numeroEspacio;
         this.tipo = tipo;
         cargarPrecioSegunTipo();
         this.disponible = true;
-    } 
+    }
     
     public int getNumeroEspacio() {
         return numeroEspacio;
@@ -47,18 +47,24 @@ public class Espacios {
     }
 
     public void setTipo(TipoEspacio tipo) {
-        validarTipo(tipo);
+        if (tipo == null) {
+            throw new IllegalArgumentException("Debe seleccionar un tipo de espacio.");
+        }
         this.tipo = tipo;
         cargarPrecioSegunTipo();
     }
 
     public void setTamaño(double tamaño) {
-        validarValorPositivo(tamaño, "El tamaño");
+        if (tamaño <= 0) {
+            throw new IllegalArgumentException("El tamaño debe ser mayor que cero.");
+        }
         this.tamaño = tamaño;
     }
 
     public void setPrecioMensual(double precioMensual) {
-        validarValorPositivo(precioMensual, "El precio mensual");
+        if (precioMensual <= 0) {
+            throw new IllegalArgumentException("El precio debe ser mayor que cero.");
+        }
         this.precioMensual = precioMensual;
     }
     
@@ -67,25 +73,7 @@ public class Espacios {
         this.precioMensual = tipo.getPrecioMensual();
     }
 
-    private static void validarNumeroEspacio(int numeroEspacio) {
-        if (numeroEspacio <= 0) {
-            throw new IllegalArgumentException("El número de espacio debe ser mayor que cero.");
-        }
-    }
-
-    private static void validarTipo(TipoEspacio tipo) {
-        if (tipo == null) {
-            throw new IllegalArgumentException("El tipo de espacio es obligatorio.");
-        }
-    }
-
-    private static void validarValorPositivo(double valor, String nombreCampo) {
-        if (Double.isNaN(valor) || Double.isInfinite(valor) || valor <= 0) {
-            throw new IllegalArgumentException(nombreCampo + " debe ser mayor que cero.");
-        }
-    }
-    
-    public void marcarOcupado(){
+    public void marcarOcupado() {
         this.disponible = false;
     }
     
@@ -93,7 +81,7 @@ public class Espacios {
         this.disponible = true;
     }
     
-    public boolean puedeEliminarse(){
+    public boolean puedeEliminarse() {
         return disponible;
     }
 
