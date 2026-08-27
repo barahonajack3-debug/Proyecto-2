@@ -477,8 +477,14 @@ public class FrmContratos extends javax.swing.JFrame {
         try{
             String identificacion = txtIndentificacion.getText();
             TipoEspacio tipo = TipoEspacio.valueOf(CombTipoEspacio.getSelectedItem().toString().toUpperCase());
-            LocalDate inicio = JdcFechaInicio.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-            LocalDate fin = JdcFechaFin.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+            java.util.Date fechaInicio = JdcFechaInicio.getDate();
+            java.util.Date fechaFin = JdcFechaFin.getDate();
+            if (fechaInicio == null || fechaFin == null) {
+                JOptionPane.showMessageDialog(this, "Debe seleccionar las fechas de inicio y fin.", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            LocalDate inicio = fechaInicio.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+            LocalDate fin = fechaFin.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
 
             contratoActual = controlador.crearContrato(identificacion, tipo, inicio, fin, serviciosSeleccionados);
 

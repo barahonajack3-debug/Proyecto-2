@@ -5,7 +5,6 @@
 package clientes;
 
 import java.util.LinkedList;
-import excepciones.ClienteConContratosVinculadosException;
 import excepciones.ClienteNoEncontradoException;
 import excepciones.IDduplicadaException;
 import java.util.ArrayList;
@@ -48,7 +47,7 @@ public class GestorCliente {
     }
 
     public void eliminarCliente (String identificacion)
-    throws ClienteNoEncontradoException, ClienteConContratosVinculadosException {
+    throws ClienteNoEncontradoException {
             Cliente cliente =obtenerClienteRegistrado(identificacion);
             clientes.remove(cliente);
     }
