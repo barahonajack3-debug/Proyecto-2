@@ -38,7 +38,6 @@ public class FrmContratos extends javax.swing.JFrame {
         GestorEspacios gestorEspacios = new GestorEspacios();
         this.controlador = new ControladorContratos(gestorContratos, gestorCliente, gestorEspacios);
         gestorServicios = new serviciosAdicionales.gestorServicio();
-        gestorServicios.agregarServicio(new serviciosAdicionales.ServicioAdicional("Transporte de artículos", "Servicio de prueba", 5000));
     }
 
     /**

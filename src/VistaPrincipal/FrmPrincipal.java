@@ -26,13 +26,12 @@ import contrato.ControladorContratos;
 public class FrmPrincipal extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(FrmPrincipal.class.getName());
-    private ControladorContratos controlador;
+
     /**
      * Creates new form FrmPrincipal
      */
     public FrmPrincipal() {
         initComponents();
-        this.controlador = controlador;
     }
 
     /**

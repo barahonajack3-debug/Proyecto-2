@@ -29,6 +29,10 @@ public class FrmBuscarContrato extends javax.swing.JFrame {
     
     public FrmBuscarContrato() {
         initComponents();
+        contrato.GestorContratos gestorContratos = new contrato.GestorContratos();
+        clientes.GestorCliente gestorCliente = new clientes.GestorCliente();
+        Espacio.GestorEspacios gestorEspacios = new Espacio.GestorEspacios();
+        this.controlador = new ControladorContratos(gestorContratos, gestorCliente, gestorEspacios);
     }
 
     /**
@@ -223,7 +227,9 @@ public class FrmBuscarContrato extends javax.swing.JFrame {
         return;
         }
         Contratos seleccionado = resultadosBusqueda.get(fila);
-        frmcontrato.cargarContrato(seleccionado);
+        if (frmcontrato != null) {
+            frmcontrato.cargarContrato(seleccionado);
+        }
         this.dispose();    
     }//GEN-LAST:event_btnAceptarActionPerformed
 
