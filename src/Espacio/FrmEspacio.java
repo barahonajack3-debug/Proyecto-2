@@ -304,6 +304,17 @@ public class FrmEspacio extends javax.swing.JFrame {
         txtNumeroEspacio.requestFocusInWindow();
     }
 
+    public void cargarEspacio(Espacios espacio) {
+        if (espacio == null) {
+            return;
+        }
+        txtNumeroEspacio.setText(String.valueOf(espacio.getNumeroEspacio()));
+        cmbTipoEspacio.setSelectedItem(espacio.getTipo().name());
+        txtTamano.setText(String.valueOf(espacio.getTamaño()));
+        txtPrecioMensual.setText(String.valueOf(espacio.getPrecioMensual()));
+        chkDisponible.setSelected(espacio.isDisponible());
+    }
+
     /**
      * @param args the command line arguments
      */

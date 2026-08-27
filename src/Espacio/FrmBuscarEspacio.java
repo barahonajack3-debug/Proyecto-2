@@ -4,7 +4,6 @@
  */
 package Espacio;
 
-import excepciones.EspacioOcupadoException;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -60,8 +59,8 @@ public class FrmBuscarEspacio extends javax.swing.JFrame {
         tblEspacios = new javax.swing.JTable();
         btnLimpiar = new javax.swing.JButton();
         btnBuscar = new javax.swing.JButton();
-        btnNuevo = new javax.swing.JButton();
-        btnEliminar = new javax.swing.JButton();
+        btnAceptar = new javax.swing.JButton();
+        btnCancelar = new javax.swing.JButton();
 
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("Buscar espacios");
@@ -91,7 +90,7 @@ public class FrmBuscarEspacio extends javax.swing.JFrame {
                 {null, null, null, null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4", "Title 5"
+                "Número", "Tipo", "Tamaño (m²) ", "Precio mensual (₡)", "Estado"
             }
         ));
         jScrollPane1.setViewportView(tblEspacios);
@@ -102,11 +101,11 @@ public class FrmBuscarEspacio extends javax.swing.JFrame {
         btnBuscar.setText("Buscar");
         btnBuscar.addActionListener(this::btnBuscarActionPerformed);
 
-        btnNuevo.setText("Nuevo espacio");
-        btnNuevo.addActionListener(this::btnNuevoActionPerformed);
+        btnAceptar.setText("Aceptar");
+        btnAceptar.addActionListener(this::btnAceptarActionPerformed);
 
-        btnEliminar.setText("Eliminar seleccionado");
-        btnEliminar.addActionListener(this::btnEliminarActionPerformed);
+        btnCancelar.setText("Cancelar");
+        btnCancelar.addActionListener(this::btnCancelarActionPerformed);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -139,11 +138,11 @@ public class FrmBuscarEspacio extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addComponent(btnLimpiar)
                         .addGap(18, 18, 18)
-                        .addComponent(btnNuevo)
+                        .addComponent(btnAceptar)
                         .addGap(18, 18, 18)
-                        .addComponent(btnEliminar))
+                        .addComponent(btnCancelar))
                     .addComponent(jScrollPane1))
-                .addContainerGap(142, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -174,9 +173,9 @@ public class FrmBuscarEspacio extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnLimpiar, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnNuevo, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(34, Short.MAX_VALUE))
+                    .addComponent(btnAceptar, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -190,7 +189,11 @@ public class FrmBuscarEspacio extends javax.swing.JFrame {
         buscarEspacios();
     }//GEN-LAST:event_btnBuscarActionPerformed
 
-    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
+    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
+        dispose();
+    }//GEN-LAST:event_btnCancelarActionPerformed
+
+    private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
         int filaSeleccionada = tblEspacios.getSelectedRow();
         if (filaSeleccionada == -1) {
             JOptionPane.showMessageDialog(this, "Seleccione un espacio de la tabla.",
@@ -199,29 +202,13 @@ public class FrmBuscarEspacio extends javax.swing.JFrame {
         }
 
         int numeroEspacio = (Integer) tblEspacios.getValueAt(filaSeleccionada, 0);
-        int confirmacion = JOptionPane.showConfirmDialog(this,
-                "¿Desea eliminar el espacio " + numeroEspacio + "?", "Confirmar eliminación",
-                JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
-        if (confirmacion != JOptionPane.YES_OPTION) {
-            return;
-        }
-
-        try {
-            controladorEspacio.eliminarEspacio(numeroEspacio);
-            JOptionPane.showMessageDialog(this, "Espacio eliminado correctamente.", "Éxito",
-                    JOptionPane.INFORMATION_MESSAGE);
-            buscarEspacios();
-        } catch (EspacioOcupadoException e) {
-            JOptionPane.showMessageDialog(this, e.getMessage(), "No se puede eliminar",
-                    JOptionPane.ERROR_MESSAGE);
-        }
-    }//GEN-LAST:event_btnEliminarActionPerformed
-
-    private void btnNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoActionPerformed
+        Espacios espacio = controladorEspacio.buscarPorNumero(numeroEspacio);
         FrmEspacio ventanaEspacio = new FrmEspacio(controladorEspacio);
+        ventanaEspacio.cargarEspacio(espacio);
         ventanaEspacio.setLocationRelativeTo(this);
         ventanaEspacio.setVisible(true);
-    }//GEN-LAST:event_btnNuevoActionPerformed
+        dispose();
+    }//GEN-LAST:event_btnAceptarActionPerformed
 
     private void btnLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarActionPerformed
         txtFiltroNumero.setText("");
@@ -329,10 +316,10 @@ public class FrmBuscarEspacio extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnAceptar;
     private javax.swing.JButton btnBuscar;
-    private javax.swing.JButton btnEliminar;
+    private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnLimpiar;
-    private javax.swing.JButton btnNuevo;
     private javax.swing.JComboBox<String> cbmFiltroDisponible;
     private javax.swing.JComboBox<String> cbmFiltroTipo;
     private javax.swing.JLabel jLabel1;
