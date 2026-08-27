@@ -19,15 +19,17 @@ public class GestorCliente {
     public GestorCliente(){
         clientes = new LinkedList<>();
     }
-    public void agregarCliente (Cliente cliente ) throws IDduplicadaException{
-        if (cliente == null){
-            throw new IllegalArgumentException("El cliente es obligatorio.");
-            
-        }
-        if (buscarPorId(cliente.getIdentificacion())!=null){
-             throw new IDduplicadaException("Ya existe cliente con ese ID");
+    public void agregarCliente (Cliente cliente) throws IDduplicadaException{
+       {
+       for (Cliente  c: clientes) {
+          if (cliente.getIdentificacion().equals(cliente.getIdentificacion())) {
+            throw new IDduplicadaException(
+             "Ya existe un empleado con esa identificación"
+                );
+            }
         }
         clientes.add(cliente);
+    } 
     }
     public Cliente buscarPorId(String identificacion){
         for (int i=0; i<clientes.size();i++){

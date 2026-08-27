@@ -4,19 +4,29 @@
  */
 package clientes;
 
+import excepciones.ClienteConContratosVinculadosException;
+import excepciones.ClienteNoEncontradoException;
+import excepciones.EmpleadoNoencontradoException;
+import excepciones.IDduplicadaException;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Dario R
  */
 public class FrmCliente extends javax.swing.JFrame {
-    
+    public GestorCliente gestor;
+    public ControladorCliente controlador;
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(FrmCliente.class.getName());
-
+   
     /**
      * Creates new form FrmCliente
      */
     public FrmCliente() {
         initComponents();
+        gestor= new GestorCliente();
+        controlador = new ControladorCliente();
+        
     }
 
     /**
@@ -44,8 +54,7 @@ public class FrmCliente extends javax.swing.JFrame {
         jPanel3 = new javax.swing.JPanel();
         BtnGuardar = new javax.swing.JButton();
         BtnActualizar = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
+        BtnEliminar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -59,21 +68,16 @@ public class FrmCliente extends javax.swing.JFrame {
 
         jLabel2.setText("Identificacion*");
 
-        TxtId.setText("jTextField1");
+        TxtId.addActionListener(this::TxtIdActionPerformed);
 
         BtnBuscar.setText("Buscar cliente");
+        BtnBuscar.addActionListener(this::BtnBuscarActionPerformed);
 
         jLabel3.setText("Nombre Completo*");
 
-        TxtNombre.setText("jTextField2");
-
         jLabel4.setText("Telefono*");
 
-        TxtTelefono.setText("jTextField3");
-
         jLabel5.setText("Correo Electronico*");
-
-        TxtCorreo.setText("jTextField4");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -128,14 +132,13 @@ public class FrmCliente extends javax.swing.JFrame {
         );
 
         BtnGuardar.setText("Guardar");
+        BtnGuardar.addActionListener(this::BtnGuardarActionPerformed);
 
         BtnActualizar.setText("Actualizar");
         BtnActualizar.addActionListener(this::BtnActualizarActionPerformed);
 
-        jButton3.setText("jButton3");
-        jButton3.addActionListener(this::jButton3ActionPerformed);
-
-        jButton4.setText("jButton4");
+        BtnEliminar.setText("Eliminar");
+        BtnEliminar.addActionListener(this::BtnEliminarActionPerformed);
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -147,9 +150,7 @@ public class FrmCliente extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(BtnActualizar)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton3)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton4)
+                .addComponent(BtnEliminar)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
@@ -159,8 +160,7 @@ public class FrmCliente extends javax.swing.JFrame {
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(BtnGuardar)
                     .addComponent(BtnActualizar)
-                    .addComponent(jButton3)
-                    .addComponent(jButton4))
+                    .addComponent(BtnEliminar))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -175,16 +175,16 @@ public class FrmCliente extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(16, 16, 16))
+                .addGap(24, 24, 24))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 20, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(23, 23, 23))
+                .addGap(15, 15, 15))
         );
 
         javax.swing.GroupLayout jInternalFrame1Layout = new javax.swing.GroupLayout(jInternalFrame1.getContentPane());
@@ -214,11 +214,54 @@ public class FrmCliente extends javax.swing.JFrame {
 
     private void BtnActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnActualizarActionPerformed
         // TODO add your handling code here:
+        String identificacion = TxtId.getText();
+        String Nombre = TxtNombre.getText();
+        String telefono = TxtTelefono.getText();
+        String correoElectronico =TxtCorreo.getText();
+        try {
+            controlador.actualizarCliente(identificacion, Nombre, telefono, correoElectronico);
+        } catch (ClienteNoEncontradoException ex) {
+            System.getLogger(FrmCliente.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+        }
+        JOptionPane.showMessageDialog(this, "Se actualizo el empleado correctamente");
     }//GEN-LAST:event_BtnActualizarActionPerformed
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+    private void TxtIdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TxtIdActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton3ActionPerformed
+    }//GEN-LAST:event_TxtIdActionPerformed
+
+    private void BtnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnBuscarActionPerformed
+        // TODO add your handling code here:
+      FrmBuscarCliente buscar = new FrmBuscarCliente(controlador, this);
+      buscar.setVisible(true);
+    }//GEN-LAST:event_BtnBuscarActionPerformed
+
+    private void BtnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnGuardarActionPerformed
+        // TODO add your handling code here:
+        String identificacion = TxtId.getText();
+        String Nombre = TxtNombre.getText();
+        String telefono = TxtTelefono.getText();
+        String correoElectronico =TxtCorreo.getText();
+        JOptionPane.showMessageDialog(this,"Se guardo correctamente el empleado");
+        try {
+            controlador.actualizarCliente(identificacion, Nombre, telefono, correoElectronico);
+        } catch (ClienteNoEncontradoException ex) {
+            System.getLogger(FrmCliente.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+        }
+    }//GEN-LAST:event_BtnGuardarActionPerformed
+
+    private void BtnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnEliminarActionPerformed
+        // TODO add your handling code here:
+        String identificacion = TxtId.getText();
+        try {
+            controlador.eliminarCliente(identificacion);
+        } catch (ClienteNoEncontradoException ex) {
+            System.getLogger(FrmCliente.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+        } catch (ClienteConContratosVinculadosException ex) {
+            System.getLogger(FrmCliente.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+        }
+        JOptionPane.showMessageDialog(this, "Se elimino correctamente el empleado");
+    }//GEN-LAST:event_BtnEliminarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -248,13 +291,12 @@ public class FrmCliente extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton BtnActualizar;
     private javax.swing.JButton BtnBuscar;
+    private javax.swing.JButton BtnEliminar;
     private javax.swing.JButton BtnGuardar;
     private javax.swing.JTextField TxtCorreo;
     private javax.swing.JTextField TxtId;
     private javax.swing.JTextField TxtNombre;
     private javax.swing.JTextField TxtTelefono;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
     private javax.swing.JInternalFrame jInternalFrame1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

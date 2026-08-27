@@ -14,13 +14,14 @@ import java.util.List;
  * @author Dario R
  */
 public class ControladorCliente {
+    private Cliente cliente;
   private GestorCliente gestorCliente;
-  private ControladorCliente controlador;
-  
-    public ControladorCliente(GestorCliente gestorCliente, ControladorCliente controlador) {
+
+    public ControladorCliente(Cliente cliente, GestorCliente gestorCliente) {
         this.gestorCliente = gestorCliente;
-        this.controlador = controlador;
     }
+  
+  
     public void guardarCliente(String identificacion, String nombreCompleto,
     String telefono, LocalDate fechaNacimiento, String correoElectronico)
     throws IDduplicadaException{
@@ -31,14 +32,17 @@ public class ControladorCliente {
     public Cliente buscarPorId ( String identificacion){
     return gestorCliente.buscarPorId(identificacion);
 }
-    public void actualizarCliente(String identificacion, String nombreCompleto,
-    String telefono, LocalDate fechaNacimiento, String correoElectronico)
+    public void actualizarCliente(String identificacion, String nombreCompleto, String telefono, String correoElectronico)
     throws ClienteNoEncontradoException{
         gestorCliente.actualizarCliente(identificacion, nombreCompleto, telefono, correoElectronico);
     }
     public void eliminarCliente(String identificacion)
     throws ClienteNoEncontradoException, ClienteConContratosVinculadosException {
         gestorCliente.eliminarCliente(identificacion);
+    }
+    public void agregarCliente (String identificacion, String nombreCompleto, String telefono, String correoElectronico)
+    throws ClienteNoEncontradoException, IDduplicadaException{
+        gestorCliente.agregarCliente(cliente);
     }
     public List<Cliente> buscarConFiltros (String identificacion, String nombre){
         return gestorCliente.buscarporFiltro(identificacion, nombre);
