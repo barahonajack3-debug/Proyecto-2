@@ -44,6 +44,8 @@ public class FrmBuscarCliente extends javax.swing.JInternalFrame {
 
         jButton2.setText("jButton2");
 
+        setTitle("Buscar Clientes");
+
         jPanel1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
         jLabel2.setText("Buscar por Cédula / Nombre ");
