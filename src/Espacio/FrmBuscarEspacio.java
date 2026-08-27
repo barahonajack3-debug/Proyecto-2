@@ -16,19 +16,25 @@ public class FrmBuscarEspacio extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(FrmBuscarEspacio.class.getName());
     private final ControladorEspacio controladorEspacio;
+    private final FrmEspacio frmEspacio;
 
     /**
      * Creates new form FrmBuscarEspacio
      */
     public FrmBuscarEspacio() {
-        this(new ControladorEspacio());
+        this(new ControladorEspacio(), null);
     }
 
     public FrmBuscarEspacio(ControladorEspacio controladorEspacio) {
+        this(controladorEspacio, null);
+    }
+
+    public FrmBuscarEspacio(ControladorEspacio controladorEspacio, FrmEspacio frmEspacio) {
         if (controladorEspacio == null) {
             throw new IllegalArgumentException("El controlador de espacios es obligatorio.");
         }
         this.controladorEspacio = controladorEspacio;
+        this.frmEspacio = frmEspacio;
         initComponents();
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         configurarTabla();
@@ -175,11 +181,11 @@ public class FrmBuscarEspacio extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 257, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnLimpiar, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                    .addComponent(btnAceptar, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                    .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnLimpiar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(btnAceptar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(btnCancelar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
 
@@ -208,10 +214,15 @@ public class FrmBuscarEspacio extends javax.swing.JFrame {
 
         int numeroEspacio = (Integer) tblEspacios.getValueAt(filaSeleccionada, 0);
         Espacios espacio = controladorEspacio.buscarPorNumero(numeroEspacio);
-        FrmEspacio ventanaEspacio = new FrmEspacio(controladorEspacio);
-        ventanaEspacio.cargarEspacio(espacio);
-        ventanaEspacio.setLocationRelativeTo(this);
-        ventanaEspacio.setVisible(true);
+        if (frmEspacio == null) {
+            JOptionPane.showMessageDialog(this,
+                    "Abra esta búsqueda desde la ventana de Espacios.",
+                    "Ventana principal no disponible", JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
+        frmEspacio.cargarEspacio(espacio);
+        frmEspacio.setVisible(true);
+        frmEspacio.toFront();
         dispose();
     }//GEN-LAST:event_btnAceptarActionPerformed
 
