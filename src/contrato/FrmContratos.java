@@ -512,7 +512,9 @@ public class FrmContratos extends javax.swing.JFrame {
             if (opcion == JOptionPane.YES_OPTION) {
                 new clientes.FrmCliente().setVisible(true);
             }
-        } catch (FechaNoValidaExcepcion | EspacioNoDisponibleException e) {
+        } catch (FechaNoValidaExcepcion e) {
+            JOptionPane.showMessageDialog(this, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        } catch (EspacioNoDisponibleException e) {
             JOptionPane.showMessageDialog(this, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
     }
     }//GEN-LAST:event_btnCrearContratoActionPerformed

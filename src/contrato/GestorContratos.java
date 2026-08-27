@@ -34,7 +34,7 @@ public class GestorContratos {
         return contratos;
     }
     
-    //Busqueda directa por numero de contrato usando HashMap (O(1))
+    //Busqueda directa por numero de contrato usando el HashMap
     public Contratos buscarPorNumero(int numero) {
         return mapaContratos.get(numero);
     }

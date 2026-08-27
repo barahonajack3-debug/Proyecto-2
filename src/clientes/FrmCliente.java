@@ -272,7 +272,9 @@ public class FrmCliente extends javax.swing.JFrame {
             controlador.eliminarCliente(identificacion);
             JOptionPane.showMessageDialog(this, "Cliente eliminado.");
             limpiarCampos();
-        } catch (ClienteNoEncontradoException | ClienteConContratosVinculadosException e) {
+        } catch (ClienteNoEncontradoException e) {
+            JOptionPane.showMessageDialog(this, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        } catch (ClienteConContratosVinculadosException e) {
             JOptionPane.showMessageDialog(this, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_BtnEliminarActionPerformed

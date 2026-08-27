@@ -22,7 +22,6 @@ public class FrmBuscarCliente extends javax.swing.JInternalFrame {
     public FrmBuscarCliente() {
         initComponents();
         controlador = new ControladorCliente();
-        BtnFitrar.addActionListener(this::BtnFitrarActionPerformed);
         cargarTabla(controlador.obtenerClientes());
     }
 
@@ -198,7 +197,17 @@ public class FrmBuscarCliente extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_BtnCancelarActionPerformed
 
     private void BtnFitrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnFitrarActionPerformed
-        // TODO add your handling code here:
+        String texto = TextBusqueda.getText().trim();
+        List<Cliente> resultado = new ArrayList<>();
+        for (int i = 0; i < controlador.obtenerClientes().size(); i++) {
+            Cliente cliente = controlador.obtenerClientes().get(i);
+            if (texto.isEmpty()
+                    || cliente.getIdentificacion().contains(texto)
+                    || cliente.getNombreCompleto().toLowerCase().contains(texto.toLowerCase())) {
+                resultado.add(cliente);
+            }
+        }
+        cargarTabla(resultado);
     }//GEN-LAST:event_BtnFitrarActionPerformed
 
     private void cargarTabla(List<Cliente> clientes) {
