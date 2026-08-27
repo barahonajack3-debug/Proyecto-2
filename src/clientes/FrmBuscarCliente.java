@@ -4,18 +4,37 @@
  */
 package clientes;
 
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author Dario R
  */
-public class FrmBuscarCliente extends javax.swing.JInternalFrame {
-
+public class FrmBuscarCliente extends javax.swing.JFrame {
+    
+    private ControladorCliente controlador;
+    private FrmCliente frmCliente;
+    
+   
     /**
      * Creates new form FrmBuscarCliente
      */
-    public FrmBuscarCliente() {
+    public FrmBuscarCliente(ControladorCliente controlador, FrmCliente frmCliente) {
         initComponents();
+        this.controlador = controlador;
+    this.frmCliente = frmCliente;
+    tablabuscar();
+}
+    private void tablabuscar() {
+    DefaultTableModel modelo = (DefaultTableModel) TblInfo.getModel();
+    modelo.setRowCount(0);
+    for (Cliente c : controlador.obtenerClientes()) {
+        modelo.addRow(new Object[]{
+            c.getIdentificacion(), c.getNombreCompleto(),
+            c.getTelefono(), c.getCorreoElectronico()
+        });
     }
+}
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -30,9 +49,8 @@ public class FrmBuscarCliente extends javax.swing.JInternalFrame {
         jButton2 = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        TextBusqueda = new javax.swing.JTextPane();
         BtnFitrar = new javax.swing.JButton();
+        TxtFiltrar = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
         TblInfo = new javax.swing.JTable();
@@ -50,9 +68,10 @@ public class FrmBuscarCliente extends javax.swing.JInternalFrame {
 
         jLabel2.setText("Buscar por Cédula");
 
-        jScrollPane1.setViewportView(TextBusqueda);
-
         BtnFitrar.setText("Filtrar");
+        BtnFitrar.addActionListener(this::BtnFitrarActionPerformed);
+
+        TxtFiltrar.addActionListener(this::TxtFiltrarActionPerformed);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -62,7 +81,7 @@ public class FrmBuscarCliente extends javax.swing.JInternalFrame {
                 .addContainerGap()
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 368, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(TxtFiltrar, javax.swing.GroupLayout.PREFERRED_SIZE, 370, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(BtnFitrar)
                 .addContainerGap(32, Short.MAX_VALUE))
@@ -70,11 +89,12 @@ public class FrmBuscarCliente extends javax.swing.JInternalFrame {
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(12, 12, 12)
+                .addGap(9, 9, 9)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(BtnFitrar)
-                    .addComponent(jLabel2))
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel2)
+                        .addComponent(TxtFiltrar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(13, Short.MAX_VALUE))
         );
 
@@ -175,20 +195,27 @@ public class FrmBuscarCliente extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_BtnCancelarActionPerformed
 
+    private void TxtFiltrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TxtFiltrarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_TxtFiltrarActionPerformed
+
+    private void BtnFitrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnFitrarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_BtnFitrarActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton BtnCancelar;
     private javax.swing.JButton BtnFitrar;
     private javax.swing.JButton BtnMostarContrato;
     private javax.swing.JTable TblInfo;
-    private javax.swing.JTextPane TextBusqueda;
+    private javax.swing.JTextField TxtFiltrar;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     // End of variables declaration//GEN-END:variables
 }

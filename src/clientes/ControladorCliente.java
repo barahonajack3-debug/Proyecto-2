@@ -15,9 +15,11 @@ import java.util.List;
  */
 public class ControladorCliente {
   private GestorCliente gestorCliente;
-
+  private ControladorCliente controlador;
+  
     public ControladorCliente(GestorCliente gestorCliente, ControladorCliente controlador) {
         this.gestorCliente = gestorCliente;
+        this.controlador = controlador;
     }
     public void guardarCliente(String identificacion, String nombreCompleto,
     String telefono, LocalDate fechaNacimiento, String correoElectronico)
