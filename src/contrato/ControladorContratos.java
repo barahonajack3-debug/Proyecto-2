@@ -6,6 +6,8 @@ package contrato;
 
 import Espacio.GestorEspacios;
 import Espacio.TipoEspacio;
+import clientes.Cliente;
+import clientes.GestorCliente;
 import excepciones.CambioEstadoIncorrectoException;
 import excepciones.ClienteNoEncontradoException;
 import excepciones.EspacioNoDisponibleException;
@@ -51,7 +53,7 @@ public class ControladorContratos {
     }
  
     public Cliente buscarCliente(String identificacion) {
-        return gestorCliente.buscarPorIdentificacion(identificacion);
+        return gestorCliente.buscarPorId(identificacion);
     }
 
     public ArrayList<Contratos> buscarContratos(Integer numeroContrato, String identificacionCliente,

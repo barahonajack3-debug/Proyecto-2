@@ -49,7 +49,6 @@ public class FrmCliente extends javax.swing.JFrame {
         BtnActualizar = new javax.swing.JButton();
         BtnLimpiar = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Clientes");
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N

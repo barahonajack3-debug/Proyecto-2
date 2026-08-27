@@ -255,7 +255,7 @@ public class FrmBuscarContrato extends javax.swing.JFrame {
         for(Contratos contrato : resultadosBusqueda) {
             modelo.addRow(new Object[]{
                 contrato.getNumeroContrato(),
-                contrato.getCliente().getNombre(),
+                contrato.getCliente().getNombreCompleto(),
                 contrato.getEspacio().getNumeroEspacio(),
                 contrato.getInicio_Fecha(),
                 contrato.getFin_Fecha(),

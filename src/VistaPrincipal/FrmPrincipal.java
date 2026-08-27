@@ -8,7 +8,6 @@ import Espacio.ControladorEspacio;
 import contrato.ControladorContratos;
 import contrato.FrmBuscarContrato;
 import contrato.FrmContratos;
-import contrato.GestorCliente;
 import contrato.GestorContratos;
 import empleados.ControladorEmpleado;
 import empleados.FrmbuscarEmpleado;
@@ -20,8 +19,7 @@ import serviciosAdicionales.ControladorServicio;
 import serviciosAdicionales.FrmServicio;
 import serviciosAdicionales.frmBuscarServicio;
 import serviciosAdicionales.gestorServicio;
-import Espacio.GestorEspacios;
-import javax.swing.JOptionPane;
+import clientes.FrmCliente;
 
 /**
  *
@@ -47,6 +45,9 @@ public class FrmPrincipal extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jDesktopPane1 = new javax.swing.JDesktopPane();
+        frmBuscarCliente1 = new clientes.FrmBuscarCliente();
+        btnSalir = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         MenuModulos = new javax.swing.JMenu();
         MenuClientes = new javax.swing.JMenuItem();
@@ -62,6 +63,35 @@ public class FrmPrincipal extends javax.swing.JFrame {
         MenuBuscarContratos = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        frmBuscarCliente1.setVisible(false);
+
+        btnSalir.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnSalir.setText("Salir");
+        btnSalir.addActionListener(this::btnSalirActionPerformed);
+
+        jDesktopPane1.setLayer(frmBuscarCliente1, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jDesktopPane1.setLayer(btnSalir, javax.swing.JLayeredPane.DEFAULT_LAYER);
+
+        javax.swing.GroupLayout jDesktopPane1Layout = new javax.swing.GroupLayout(jDesktopPane1);
+        jDesktopPane1.setLayout(jDesktopPane1Layout);
+        jDesktopPane1Layout.setHorizontalGroup(
+            jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jDesktopPane1Layout.createSequentialGroup()
+                .addContainerGap(493, Short.MAX_VALUE)
+                .addGroup(jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(frmBuscarCliente1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnSalir, javax.swing.GroupLayout.Alignment.TRAILING))
+                .addContainerGap())
+        );
+        jDesktopPane1Layout.setVerticalGroup(
+            jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jDesktopPane1Layout.createSequentialGroup()
+                .addComponent(frmBuscarCliente1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 308, Short.MAX_VALUE)
+                .addComponent(btnSalir)
+                .addContainerGap())
+        );
 
         MenuModulos.setText("Modulos");
 
@@ -117,11 +147,11 @@ public class FrmPrincipal extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 509, Short.MAX_VALUE)
+            .addComponent(jDesktopPane1)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 315, Short.MAX_VALUE)
+            .addComponent(jDesktopPane1)
         );
 
         pack();
@@ -136,7 +166,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_MenuContratosActionPerformed
 
     private void MenuClientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuClientesActionPerformed
-        JOptionPane.showMessageDialog(this, "Módulo de Clientes no disponible aún.");
+        new FrmCliente().setVisible(true);
     }//GEN-LAST:event_MenuClientesActionPerformed
 
     private void MenuEmpleadosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuEmpleadosActionPerformed
@@ -154,7 +184,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_MenuBuscarServiciosActionPerformed
 
     private void MenuBuscarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuBuscarClienteActionPerformed
-        JOptionPane.showMessageDialog(this, "Módulo de Búsqueda de Clientes no disponible aún.");
+        frmBuscarCliente1.setVisible(true);
     }//GEN-LAST:event_MenuBuscarClienteActionPerformed
 
     private void MenuBuscarEmpleadosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuBuscarEmpleadosActionPerformed
@@ -170,6 +200,10 @@ public class FrmPrincipal extends javax.swing.JFrame {
     private void MenuBuscarContratosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuBuscarContratosActionPerformed
         new FrmBuscarContrato().setVisible(true);
     }//GEN-LAST:event_MenuBuscarContratosActionPerformed
+
+    private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
+        this.dispose();
+    }//GEN-LAST:event_btnSalirActionPerformed
 
     /**
      * @param args the command line arguments
@@ -209,6 +243,9 @@ public class FrmPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem MenuEspacios;
     private javax.swing.JMenu MenuModulos;
     private javax.swing.JMenuItem MenuServiciosAdicionales;
+    private javax.swing.JButton btnSalir;
+    private clientes.FrmBuscarCliente frmBuscarCliente1;
+    private javax.swing.JDesktopPane jDesktopPane1;
     private javax.swing.JMenuBar jMenuBar1;
     // End of variables declaration//GEN-END:variables
 }

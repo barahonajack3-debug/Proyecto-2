@@ -7,6 +7,8 @@ package contrato;
 import Espacio.Espacios;
 import Espacio.GestorEspacios;
 import Espacio.TipoEspacio;
+import clientes.Cliente;
+import clientes.GestorCliente;
 import excepciones.ClienteNoEncontradoException;
 import excepciones.EspacioNoDisponibleException;
 import excepciones.FechaNoValidaExcepcion;
@@ -48,7 +50,7 @@ public class GestorContratos {
         ArrayList<ServicioAdicional> servicios,GestorCliente gestorcliente,GestorEspacios gestorespacio)
         throws ClienteNoEncontradoException,FechaNoValidaExcepcion,EspacioNoDisponibleException{
         //Validar que el cliente exista
-        Cliente cliente=gestorcliente.buscarPorIdentificacion(identificacionCliente);
+        Cliente cliente=gestorcliente.buscarPorId(identificacionCliente);
         if(cliente==null){
             throw new ClienteNoEncontradoException("No existe ningún cliente registrado con identificación:" + identificacionCliente
                 + " Puede registrarlo desde la opción de Clientes");

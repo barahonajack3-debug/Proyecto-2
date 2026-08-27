@@ -5,6 +5,7 @@
 package contrato;
 
 import Espacio.Espacios;
+import clientes.Cliente;
 import excepciones.CambioEstadoIncorrectoException;
 import excepciones.FechaNoValidaExcepcion;
 import java.time.LocalDate;

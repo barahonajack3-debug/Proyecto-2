@@ -6,11 +6,12 @@ package contrato;
 
 import Espacio.GestorEspacios;
 import Espacio.TipoEspacio;
+import clientes.Cliente;
+import clientes.GestorCliente;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
-import contrato.GestorContratos;
 import excepciones.CambioEstadoIncorrectoException;
 import excepciones.ClienteNoEncontradoException;
 import excepciones.EspacioNoDisponibleException;
@@ -403,7 +404,7 @@ public class FrmContratos extends javax.swing.JFrame {
         double subtotal = Math.round(contrato.calcularSubTotal() * 100.0) / 100.0;
         double impuestos = Math.round(contrato.calcularImpuestos() * 100.0) / 100.0;
         double total = Math.round((contrato.calcularSubTotal() + contrato.calcularImpuestos()) * 100.0) / 100.0;
-        lbNombre.setText(contrato.getCliente().getNombre());
+        lbNombre.setText(contrato.getCliente().getNombreCompleto());
         lbEspacioAsignado.setText(String.valueOf(contrato.getEspacio().getNumeroEspacio()));
         lbSubtotal.setText("" + subtotal);
         lbImpuestos.setText("" + impuestos);
@@ -453,13 +454,13 @@ public class FrmContratos extends javax.swing.JFrame {
             LocalDate inicio = JdcFechaInicio.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
             LocalDate fin = JdcFechaFin.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
 
-            contratoActual = controlador.crearContrato(identificacion, tipo, inicio, fin, new ArrayList<>());
+            contratoActual = controlador.crearContrato(identificacion, tipo, inicio, fin, serviciosSeleccionados);
 
             double subtotal = Math.round(contratoActual.calcularSubTotal() * 100.0) / 100.0;
             double impuestos = Math.round(contratoActual.calcularImpuestos() * 100.0) / 100.0;
             double total = Math.round((contratoActual.calcularSubTotal() + contratoActual.calcularImpuestos()) * 100.0) / 100.0;
 
-            lbNombre.setText(contratoActual.getCliente().getNombre());
+            lbNombre.setText(contratoActual.getCliente().getNombreCompleto());
             lbEspacioAsignado.setText(String.valueOf(contratoActual.getEspacio().getNumeroEspacio()));
             lbSubtotal.setText("" + subtotal);
             lbImpuestos.setText("" + impuestos);
@@ -477,7 +478,7 @@ public class FrmContratos extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "No existe ningún cliente con esa identificación. Regístrelo primero en Clientes.");
             lbNombre.setText("");
         } else {
-            lbNombre.setText(cliente.getNombre());
+            lbNombre.setText(cliente.getNombreCompleto());
         }
     }//GEN-LAST:event_btnBuscarActionPerformed
 
