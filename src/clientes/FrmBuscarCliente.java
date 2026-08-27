@@ -23,6 +23,17 @@ public class FrmBuscarCliente extends javax.swing.JInternalFrame {
         initComponents();
         controlador = new ControladorCliente();
         cargarTabla(controlador.obtenerClientes());
+        TextBusqueda.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                if (evt.getKeyCode() == java.awt.event.KeyEvent.VK_ENTER) {
+                    BtnFitrarActionPerformed(null);
+                }
+            }
+        });
+    }
+
+    public void actualizarTabla() {
+        cargarTabla(controlador.obtenerClientes());
     }
 
     /**

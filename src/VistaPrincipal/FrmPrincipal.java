@@ -192,6 +192,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_MenuBuscarServiciosActionPerformed
 
     private void MenuBuscarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuBuscarClienteActionPerformed
+        frmBuscarCliente1.actualizarTabla();
         frmBuscarCliente1.setVisible(true);
     }//GEN-LAST:event_MenuBuscarClienteActionPerformed
 
