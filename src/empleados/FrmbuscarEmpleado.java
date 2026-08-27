@@ -71,12 +71,15 @@ public class FrmbuscarEmpleado extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(tblbusca);
 
+        btbusca.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos48/deskbar-applet.png"))); // NOI18N
         btbusca.setText("Bucar");
         btbusca.addActionListener(this::btbuscaActionPerformed);
 
+        btacep.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos48/accepted_48.png"))); // NOI18N
         btacep.setText("aceptar");
         btacep.addActionListener(this::btacepActionPerformed);
 
+        btcanc.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos48/button_cancel (4).png"))); // NOI18N
         btcanc.setText("cancelar");
         btcanc.addActionListener(this::btcancActionPerformed);
 
@@ -94,18 +97,18 @@ public class FrmbuscarEmpleado extends javax.swing.JFrame {
                         .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(txfnom))
                     .addComponent(jLabel3))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 32, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 452, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(btbusca)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btacep)
-                        .addGap(109, 109, 109)
+                        .addGap(36, 36, 36)
                         .addComponent(btcanc)
-                        .addGap(26, 26, 26))))
+                        .addGap(21, 21, 21))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 431, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(21, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -128,11 +131,10 @@ public class FrmbuscarEmpleado extends javax.swing.JFrame {
                         .addContainerGap()
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 332, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btbusca)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(btacep)
-                        .addComponent(btcanc)))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btacep)
+                    .addComponent(btcanc)
+                    .addComponent(btbusca))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
