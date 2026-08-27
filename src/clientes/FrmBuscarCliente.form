@@ -104,7 +104,7 @@
       <SubComponents>
         <Component class="javax.swing.JLabel" name="jLabel2">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Buscar por C&#xe9;dula"/>
+            <Property name="text" type="java.lang.String" value="Buscar por C&#xe9;dula / Nombre "/>
           </Properties>
         </Component>
         <Container class="javax.swing.JScrollPane" name="jScrollPane1">
