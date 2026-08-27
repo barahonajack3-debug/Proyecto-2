@@ -232,11 +232,16 @@ public class registroEmpleado extends javax.swing.JFrame {
             String ID = txtID.getText();
             String Nombre = txtNOM.getText();
             String telefono =txtTEL.getText();
+            
             Puesto puesto = Puesto.valueOf(cbxpuesto.getSelectedItem().toString());
-            JOptionPane.showMessageDialog(this,"Se guardo correctamente el empleado");
             controlador.agregarEmpleado(ID, Nombre, telefono, puesto);
+            JOptionPane.showMessageDialog(this,"Se guardo correctamente el empleado");
+            
             
         } catch (IDduplicadaException i){
+            JOptionPane.showMessageDialog(this, i.getMessage());
+            
+        } catch(IllegalArgumentException i){
             JOptionPane.showMessageDialog(this, i.getMessage());
         }
     }//GEN-LAST:event_btguardarActionPerformed

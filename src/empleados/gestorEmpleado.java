@@ -21,13 +21,14 @@ public class gestorEmpleado {
     public gestorEmpleado(){
     empleados = new ArrayList<>();
 }
-    public void agregarEmpleado(Empleado empleado) 
-      throws IDduplicadaException {
-       for (Empleado e : empleados) {
-          if (e.getID().equals(empleado.getID())) {
-            throw new IDduplicadaException(
-             "Ya existe un empleado con esa identificación"
-                );
+    public void agregarEmpleado(Empleado empleado)
+        throws IDduplicadaException{
+        if(empleado.getID().isEmpty()||empleado.getNombre().isEmpty()||empleado.getTelefono().isEmpty()){
+            throw new IllegalArgumentException("Faltan datos");
+        }
+        for (Empleado m : empleados){
+            if(m.getID().equals(empleado.getID())){
+                throw new IDduplicadaException("El ID ya existe");
             }
         }
         empleados.add(empleado);
@@ -55,11 +56,11 @@ public class gestorEmpleado {
     
     public void actualizarempleado(String ID,String Nombre,String Telefono,Puesto puesto)
         throws EmpleadoNoencontradoException{
-        Empleado empleado = buscarEmpleado(ID);
-        if(empleado == null){
-            throw new EmpleadoNoencontradoException(
-            "no existe empleado con ese ID");
+       
+        if(Nombre.isEmpty() || Telefono.isEmpty()){
+       throw new IllegalArgumentException("Faltan datos");
         }
+        Empleado empleado = buscarEmpleado(ID);
         empleado.setNombre(Nombre);
         empleado.setTelefono(Telefono);
         empleado.setPuesto(puesto);
@@ -68,6 +69,5 @@ public class gestorEmpleado {
      public ArrayList<Empleado> getEmpleados() {
         return empleados;
     }
-        
-    }
+ }
 

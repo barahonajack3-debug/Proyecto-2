@@ -178,7 +178,10 @@ public void cargarServicio(ServicioAdicional servicio) {
           JOptionPane.showMessageDialog(this, "Servicio guardado correctamente");
       }catch(NumberFormatException S){
           JOptionPane.showMessageDialog(this, "El precio debe ser un numero");
-      }
+      }catch (IllegalArgumentException S) {
+
+    JOptionPane.showMessageDialog(this, S.getMessage());
+}
     }//GEN-LAST:event_btGuardarActionPerformed
 
     private void btActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btActualizarActionPerformed

@@ -17,8 +17,15 @@ public class gestorServicio {
     }
      
      public void agregarServicio(ServicioAdicional servicio){
-         servicios.add(servicio);
-     }
+       if (servicio.getNombre().isEmpty() || servicio.getDescripcion().isEmpty()) {
+        throw new IllegalArgumentException("Faltan datos");
+    }
+    if (servicio.getPrecio() <= 0) {
+        throw new IllegalArgumentException("El precio no es valido");
+    }
+    servicios.add(servicio);
+}
+     
      
      public ServicioAdicional buscarServicio(int codigo)
       throws ServicioNoencontradoException {
