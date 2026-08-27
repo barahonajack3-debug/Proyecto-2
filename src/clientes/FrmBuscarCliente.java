@@ -48,7 +48,7 @@ public class FrmBuscarCliente extends javax.swing.JInternalFrame {
 
         jPanel1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
-        jLabel2.setText("Buscar por Cédula / Nombre ");
+        jLabel2.setText("Buscar por Cédula");
 
         jScrollPane1.setViewportView(TextBusqueda);
 
