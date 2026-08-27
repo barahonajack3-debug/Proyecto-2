@@ -4,11 +4,6 @@
  */
 package contrato;
 
-import Espacio.TipoEspacio;
-import excepciones.ClienteNoEncontradoException;
-import excepciones.EspacioNoDisponibleException;
-import excepciones.FechaNoValidaExcepcion;
-import javax.swing.JOptionPane;
 
 /**
  *
@@ -34,6 +29,10 @@ public class FrmBuscarContrato extends javax.swing.JFrame {
     
     public FrmBuscarContrato() {
         initComponents();
+        contrato.GestorContratos gestorContratos = new contrato.GestorContratos();
+        clientes.GestorCliente gestorCliente = new clientes.GestorCliente();
+        Espacio.GestorEspacios gestorEspacios = new Espacio.GestorEspacios();
+        this.controlador = new ControladorContratos(gestorContratos, gestorCliente, gestorEspacios);
     }
 
     /**
@@ -103,15 +102,18 @@ public class FrmBuscarContrato extends javax.swing.JFrame {
         jLabel7.setText("Resultados:");
 
         btnBuscar.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnBuscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos24/Search.png"))); // NOI18N
         btnBuscar.setText("Buscar");
         btnBuscar.addActionListener(this::btnBuscarActionPerformed);
 
         btnCancelar.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnCancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos48/application_exit (4).png"))); // NOI18N
         btnCancelar.setText("Cancelar");
         btnCancelar.addActionListener(this::btnCancelarActionPerformed);
 
         btnAceptar.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        btnAceptar.setText("Acectar");
+        btnAceptar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos48/accepted_48.png"))); // NOI18N
+        btnAceptar.setText("Aceptar");
         btnAceptar.addActionListener(this::btnAceptarActionPerformed);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -150,7 +152,7 @@ public class FrmBuscarContrato extends javax.swing.JFrame {
                                         .addComponent(ComEstado, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                 .addGap(18, 18, 18)
                                 .addComponent(btnBuscar)))
-                        .addGap(0, 10, Short.MAX_VALUE)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -225,7 +227,9 @@ public class FrmBuscarContrato extends javax.swing.JFrame {
         return;
         }
         Contratos seleccionado = resultadosBusqueda.get(fila);
-        frmcontrato.cargarContrato(seleccionado);
+        if (frmcontrato != null) {
+            frmcontrato.cargarContrato(seleccionado);
+        }
         this.dispose();    
     }//GEN-LAST:event_btnAceptarActionPerformed
 

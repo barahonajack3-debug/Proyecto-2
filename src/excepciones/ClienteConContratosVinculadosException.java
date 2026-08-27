@@ -8,7 +8,7 @@ package excepciones;
  *
  * @author Dario R
  */
-public class ClienteConContratosVinculadosException extends CajaAlmecenamientoException{
+public class ClienteConContratosVinculadosException extends CajaAlmacenamientoException{
     public ClienteConContratosVinculadosException(String mensaje){
         super(mensaje);
     }

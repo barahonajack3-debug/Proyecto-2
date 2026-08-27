@@ -8,7 +8,7 @@ package excepciones;
  *
  * @author USER
  */
-public class EspacioNoDisponibleException extends CajaAlmecenamientoException{
+public class EspacioNoDisponibleException extends CajaAlmacenamientoException{
     
     public EspacioNoDisponibleException(String mensaje) {
         super(mensaje);

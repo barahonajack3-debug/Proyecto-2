@@ -8,7 +8,7 @@ package excepciones;
  *
  * @author USER
  */
-public class ClienteNoEncontradoException extends CajaAlmecenamientoException{
+public class ClienteNoEncontradoException extends CajaAlmacenamientoException{
     
     public ClienteNoEncontradoException(String mensaje) {
         super(mensaje);

@@ -4,11 +4,8 @@
  */
 package VistaPrincipal;
 
-import Espacio.ControladorEspacio;
-import contrato.ControladorContratos;
 import contrato.FrmBuscarContrato;
 import contrato.FrmContratos;
-import contrato.GestorContratos;
 import empleados.ControladorEmpleado;
 import empleados.FrmbuscarEmpleado;
 import empleados.gestorEmpleado;
@@ -20,6 +17,7 @@ import serviciosAdicionales.FrmServicio;
 import serviciosAdicionales.frmBuscarServicio;
 import serviciosAdicionales.gestorServicio;
 import clientes.FrmCliente;
+import contrato.ControladorContratos;
 
 /**
  *
@@ -95,22 +93,27 @@ public class FrmPrincipal extends javax.swing.JFrame {
 
         MenuModulos.setText("Modulos");
 
+        MenuClientes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos32/emblem-people.png"))); // NOI18N
         MenuClientes.setText("Clientes");
         MenuClientes.addActionListener(this::MenuClientesActionPerformed);
         MenuModulos.add(MenuClientes);
 
+        MenuEmpleados.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos48/contacts.png"))); // NOI18N
         MenuEmpleados.setText("Empleados");
         MenuEmpleados.addActionListener(this::MenuEmpleadosActionPerformed);
         MenuModulos.add(MenuEmpleados);
 
+        MenuEspacios.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos32/emblem-package.png"))); // NOI18N
         MenuEspacios.setText("Espacios");
         MenuEspacios.addActionListener(this::MenuEspaciosActionPerformed);
         MenuModulos.add(MenuEspacios);
 
+        MenuServiciosAdicionales.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos48/add_48.png"))); // NOI18N
         MenuServiciosAdicionales.setText("Servicios Adicionales");
         MenuServiciosAdicionales.addActionListener(this::MenuServiciosAdicionalesActionPerformed);
         MenuModulos.add(MenuServiciosAdicionales);
 
+        MenuContratos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos48/application_vnd.oasis.opendocument.spreadsheet (4).png"))); // NOI18N
         MenuContratos.setText("Contratos");
         MenuContratos.addActionListener(this::MenuContratosActionPerformed);
         MenuModulos.add(MenuContratos);
@@ -119,22 +122,27 @@ public class FrmPrincipal extends javax.swing.JFrame {
 
         MenuBuscar.setText("Buscar");
 
+        MenuBuscarCliente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos24/Search.png"))); // NOI18N
         MenuBuscarCliente.setText("Buscar Cliente");
         MenuBuscarCliente.addActionListener(this::MenuBuscarClienteActionPerformed);
         MenuBuscar.add(MenuBuscarCliente);
 
+        MenuBuscarEmpleados.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos24/Search.png"))); // NOI18N
         MenuBuscarEmpleados.setText("Buscar Emleado");
         MenuBuscarEmpleados.addActionListener(this::MenuBuscarEmpleadosActionPerformed);
         MenuBuscar.add(MenuBuscarEmpleados);
 
+        MenuBuscarEspacios.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos24/Search.png"))); // NOI18N
         MenuBuscarEspacios.setText("Buscar Espacios");
         MenuBuscarEspacios.addActionListener(this::MenuBuscarEspaciosActionPerformed);
         MenuBuscar.add(MenuBuscarEspacios);
 
+        MenuBuscarServicios.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos24/Search.png"))); // NOI18N
         MenuBuscarServicios.setText("Buscar Servicios Adicionales");
         MenuBuscarServicios.addActionListener(this::MenuBuscarServiciosActionPerformed);
         MenuBuscar.add(MenuBuscarServicios);
 
+        MenuBuscarContratos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos24/Search.png"))); // NOI18N
         MenuBuscarContratos.setText("Buscar Contratos");
         MenuBuscarContratos.addActionListener(this::MenuBuscarContratosActionPerformed);
         MenuBuscar.add(MenuBuscarContratos);

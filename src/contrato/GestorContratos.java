@@ -14,6 +14,7 @@ import excepciones.EspacioNoDisponibleException;
 import excepciones.FechaNoValidaExcepcion;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import serviciosAdicionales.ServicioAdicional;
 
@@ -24,6 +25,7 @@ import serviciosAdicionales.ServicioAdicional;
 public class GestorContratos {
     //=====Atributos=====
     private ArrayList<Contratos> contratos;
+    private HashMap<Integer, Contratos> mapaContratos;
     private int Numero;
     
     //=====Metodos get=====
@@ -31,9 +33,15 @@ public class GestorContratos {
         return contratos;
     }
     
+    //Busqueda directa por numero de contrato usando HashMap (O(1))
+    public Contratos buscarPorNumero(int numero) {
+        return mapaContratos.get(numero);
+    }
+    
     //=====Constructor=====
     public GestorContratos() {
         this.contratos = new ArrayList<>();
+        this.mapaContratos = new HashMap<>();
         this.Numero = 1;
     }
     
@@ -71,6 +79,7 @@ public class GestorContratos {
             }
         }
         contratos.add(nuevoContrato);
+        mapaContratos.put(nuevoContrato.getNumeroContrato(), nuevoContrato);
         Numero++;
         return nuevoContrato;
     }
